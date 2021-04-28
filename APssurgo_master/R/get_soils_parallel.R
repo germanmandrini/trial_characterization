@@ -28,20 +28,21 @@ get_soils <- function(loc_n){
     ssurgo_sf <- st_as_sf(ssurgo_pol)
     st_crs(ssurgo_sf) <- 4326
     # ssurgo_sf <- st_transform(ssurgo_sf, 4326)
-    ssurgo_sf <- dplyr::select(ssurgo_sf, musym, mukey)
+    ssurgo_sf <- dplyr::select(ssurgo_sf, mukey)
   
     # ssurgo_sf_utm <- st_utm(ssurgo_sf)
     # one_loc_sf_utm  <- st_utm(one_loc_sf)
     
     field_soils_tmp <- st_intersection(ssurgo_sf,one_loc_sf )
     
-    tm_shape(ssurgo_sf) + tm_polygons('mukey') +
-      tm_shape(field_soils_tmp) + tm_dots(size = 2)
+    # tm_shape(ssurgo_sf) + tm_polygons('mukey') +
+    #   tm_shape(field_soils_tmp) + tm_dots(size = 2)
     
     # tm_shape(field_soils_tmp) + tm_polygons('mukey') +
     #   tm_layout(main.title = 'Map units')# + tm_text('mukey')
   
     field_soils_tmp$area_ha <- round(as.numeric(st_area(field_soils_tmp))/10000,6)
+    field_soils_tmp <- field_soils_tmp %>% dplyr::filter(area_ha == max(area_ha))
   }, error = function(e) e)
   
   #REAL WORK:if there is no error
@@ -60,11 +61,17 @@ get_soils <- function(loc_n){
 
 # results_list <- parLapply(cl, 1:nrow(one_tile_sf), function(x) get_soils(x))
 
-# get_soils(1)
+# Obtain soils
 results_list <- list()
 for(loc_n in 1:nrow(locs_sf)){
   print(loc_n)
-  results_list[[loc_n]] <- get_soils(loc_n)
+  
+  #rerun until the soil is obtained (it fails often)
+  uncompleted <- T
+  while(uncompleted){
+    results_list[[loc_n]] <- get_soils(loc_n)
+    uncompleted <- length(results_list) < loc_n
+  }
 }
 
 results_list_clean <- results_list[vapply(results_list, Negate(is.null), NA)]

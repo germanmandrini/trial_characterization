@@ -37,5 +37,11 @@ locs_sf <- st_difference(trials_sf) %>% mutate(id_loc = row_number()) %>% dplyr:
 # Add the id_loc to the trials
 trials_sf <- st_join(trials_sf, dplyr::select(locs_sf, id_loc))
 
+trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(Planting, format = "%m/%d/%Y"),
+                                         day = format(planting_date,"%d"),
+                                         month = format(planting_date,"%m"),
+                                         year = format(planting_date,"%Y")) 
+
+
 saveRDS(trials_sf, './trial_characterization_box/Data/rds_files/trials_sf.rds')
 saveRDS(locs_sf, './trial_characterization_box/Data/rds_files/locs_sf.rds')
