@@ -1,10 +1,12 @@
-source("./Trial_crct_DIFM/Data/APssurgo_master/R/latlong2county.R")
+source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/latlong2county.R'))
+"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/latlong2county.R"
+
 library(maps)
 library(maptools)
 
 if(FALSE){
-  data_soils = horizons_trial_dt2
-  badge_name = 'soils_G2F'
+  data_soils = horizons_dt2
+  badge_name = 'trials_characterization'
   path = directory
   crops = tolower(c("Maize","Soybean"))
 }
@@ -17,7 +19,7 @@ make_apsoils_toolbox <- function(data_soils, path, badge_name, crops) {
 
   soil_seq <- sort(as.numeric(unique(data_soils$mukey)))
   for(soil_n in soil_seq){
-      # soil_n = soil_seq[1]
+      # soil_n = soil_seq[2]
   
       data_soil <- data_soils[mukey == soil_n]
   
@@ -38,7 +40,8 @@ make_apsoils_toolbox <- function(data_soils, path, badge_name, crops) {
       xmlValue(SoilType) <- soil_n
   
       ### <Region>Story</Region>
-      county <- capitalize(latlong2county(lat=mean(data_soil$Y), long=mean(data_soil$X)))
+      # county <- capitalize(latlong2county(lat=mean(data_soil$Y), long=mean(data_soil$X)))
+      county <- latlong2county(lat=mean(data_soil$Y), long=mean(data_soil$X))
       Region <- newXMLNode("Region",parent = Soil)
       xmlValue(Region) <- county[2]
   
@@ -338,14 +341,14 @@ make_apsoils_toolbox <- function(data_soils, path, badge_name, crops) {
       NO3 <- newXMLNode("NO3",parent = Sample)
       for(j in 1:length(data_soil$thick)){
         double <- newXMLNode("double",parent = NO3)
-        xmlValue(double) <- round(data_soil$no3ppm[j],2) # same as OC but in ppm
+        xmlValue(double) <- round(data_soil$no3kgha[j],2) # same as OC but in ppm
       }
   
       #### <NH4>
       NH4 <- newXMLNode("NH4",parent = Sample)
       for(j in 1:length(data_soil$thick)){
         double <- newXMLNode("double",parent = NH4)
-        xmlValue(double) <- round(data_soil$nh4ppm[j],2) # same as 1/2 oc but ppm
+        xmlValue(double) <- round(data_soil$nh4kgha[j],2) # same as 1/2 oc but ppm
       }
   
       #### <SW>

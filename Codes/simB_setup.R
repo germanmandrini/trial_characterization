@@ -37,22 +37,20 @@ source(paste0(codes_folder, '/trial_characterization_git/Codes/simC_make_met_fil
 
 #----------------------------------------------------------------------------
 # CREATE SOIL FILES
-source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/calc_apsim_variables_onesoil.R'))
-'./trial_characterization_git/APssurgo_master/calc_apsim_variables_onesoil.R'
-"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/calc_apsim_variables_onesoil.R"
+source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/calc_apsim_variables_onesoil.R'))
+'./trial_characterization_git/APssurgo_master/R/calc_apsim_variables_onesoil.R'
+"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/calc_apsim_variables_onesoil.R"
 
-source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/make_apsoils_toolbox.R'))
-'./trial_characterization_git/APssurgo_master/make_apsoils_toolbox.R'
-"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/make_apsoils_toolbox.R"
-region_n =  as.numeric(str_extract(one_cell_dt$region[1], pattern = '[0-9]'))
+source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/make_apsoils_toolbox.R'))
+'./trial_characterization_git/APssurgo_master/R/make_apsoils_toolbox.R'
+"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/make_apsoils_toolbox.R"
 
-horizons_cell_dt <- grid10_horizons_v1_dt[mukey %in% one_cell_dt$mukey,]
-horizons_cell_dt[is.na(ph), ph := 6] #a few soils didn't have ph and apsim doesn't use it
-horizons_cell2_dt <- calc_apsim_variables(horizons_cell_dt, region_n)
+horizons_dt[is.na(ph), ph := 6] #a few soils didn't have ph and apsim doesn't use it
+horizons_dt2 <- calc_apsim_variables(horizons_dt)
 # horizons_cell2_dt[bottom >= restriction, XF_maize := 0] #limit the depth of the soil to the restriction
 
 horizons_cell2_dt <- cbind(horizons_cell2_dt,cell_coords)
-make_apsoils_toolbox(data_soils = horizons_cell2_dt, badge_name = 'soils_vr_value', path = directory, crops = tolower(c("Maize","Soybean")))
+make_apsoils_toolbox(data_soils = horizons_dt2, badge_name = 'trials_characterization', path = directory, crops = tolower(c("Maize","Soybean")))
 
 #----------------------------------------------------------------------------
 # CREATE THE INSTRUCTIONS FOR THE STABILIZATION PERIOD 

@@ -1,5 +1,6 @@
 # https://stackoverflow.com/questions/13316185/r-convert-zipcode-or-lat-long-to-county
 
+
 latlong2county <- function(lat, long) {
   
   # Prepare SpatialPolygons object with one SpatialPolygon

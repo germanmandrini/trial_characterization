@@ -1,18 +1,18 @@
-source("./Trial_crct_DIFM/Data/APssurgo_master/R/SaxtonRawls.R")
- 
-# horizons_cell_dt <- horizons_trial_dt
+source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/SaxtonRawls.R'))
+"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/SaxtonRawls.R"
+# horizons_dt <- horizons_dt
 
 
-calc_apsim_variables <- function(horizons_cell_dt){
+calc_apsim_variables <- function(horizons_dt, region_n){
     
   # packages_need <- c('dplyr', 'data.table')
   # lapply(packages_need, require, character.only = TRUE)
   
   soils_list <- list()
-  mukey_seq <- sort(unique(horizons_cell_dt$mukey))
+  mukey_seq <- sort(unique(horizons_dt$mukey))
   for(mukey_n in mukey_seq){
     # mukey_n <- mukey_seq[1]
-    horizon <- horizons_cell_dt[mukey == mukey_n,]
+    horizon <- horizons_dt[mukey == mukey_n,]
   
     # Calculate new variables -------------------------------------------------------------------
   
@@ -24,7 +24,8 @@ calc_apsim_variables <- function(horizons_cell_dt){
     #horizon$dul.sr <- SaxtonRawls(pSand=horizon$sand ,pClay=horizon$clay, pOM=horizon$om)$DUL
   
     horizon$ksat <- pmin(horizon$ksat*100/1.157,SaxtonRawls(pSand=horizon$sand ,pClay=horizon$clay, pOM=horizon$om)$KSAT*24) # mm/day
-  
+    horizon[ksat >= 1000, ksat := 990] #get a warning if higher than 1000 (GM 08/31/2020)
+    
     #horizon$ksat <- ifelse(horizon$ksat > 500, 500, horizon$ksat) # mm/day
   
     horizon$sat <- SaxtonRawls(pSand=horizon$sand ,pClay=horizon$clay, pOM=horizon$om)$SAT/100
@@ -79,7 +80,7 @@ calc_apsim_variables <- function(horizons_cell_dt){
     horizon$EnrBcoeff	<- 0.2
   
     horizon$XF_maize <- ifelse(horizon$center<=150,1,0.1)# ifelse(horizon$center<=150,1,0) Changed by gm on 2/28/2019
-  
+    
     horizon$KL_maize <-	ifelse(horizon$center<=20,0.08,0.09*exp(-0.007*horizon$center))
   
     horizon$e	<- 0.5  #ifelse(F4=$BC$3,0.07,IF(F4=$BC$4,0.03,0.05))
@@ -94,21 +95,28 @@ calc_apsim_variables <- function(horizons_cell_dt){
                     ifelse(horizon$center[-1] >= 100 & diff(horizon$OC) == 0,
                            horizon$OC[1]*exp(horizon$center[-1]*-0.035),
                            horizon$OC)) # exponential decay below 100 cm if data is missing
+    horizon[OC==0, OC := 0.001]
   
   
-    horizon$FInert <- ifelse(horizon$center<=1,0.4,
-                             ifelse(horizon$center<=10,0.4,
-                                    ifelse(horizon$center<60,0.008*horizon$center+0.32,
-                                           ifelse(horizon$center<=120,0.8,
-                                                  ifelse(horizon$center<180,0.0032*horizon$center+0.42,
-                                                         ifelse(horizon$center<=300,0.99,0)))))) #(0-1)
+    # horizon$FInert <- ifelse(horizon$center<=1,0.4,
+    #                          ifelse(horizon$center<=10,0.4,
+    #                                 ifelse(horizon$center<60,0.008*horizon$center+0.32,
+    #                                        ifelse(horizon$center<=120,0.8,
+    #                                               ifelse(horizon$center<180,0.0032*horizon$center+0.42,
+    #                                                      ifelse(horizon$center<=300,0.99,0)))))) #(0-1)
+    # 
+    # horizon$FBiom <- ifelse(horizon$center<=10,0.04,
+    #                         ifelse(horizon$center<=20,0.055-0.0015*horizon$center,
+    #                                ifelse(horizon$center<=30,0.03-0.0005*horizon$center,
+    #                                       ifelse(horizon$center<60,0.0216-0.0002*horizon$center,
+    #                                              ifelse(horizon$center<=300,0.01,0))))) #(0-1)
   
-    horizon$FBiom <- ifelse(horizon$center<=10,0.04,
-                            ifelse(horizon$center<=20,0.055-0.0015*horizon$center,
-                                   ifelse(horizon$center<=30,0.03-0.0005*horizon$center,
-                                          ifelse(horizon$center<60,0.0216-0.0002*horizon$center,
-                                                 ifelse(horizon$center<=300,0.01,0))))) #(0-1)
+
+    horizon$FBiom = c(0.08, 0.06, 0.055, 0.035, 0.015, 0.01,0.005, 0.005, 0.001,0.001)
+    horizon$FInert = c(0.42, 0.45, 0.55, 0.6, 0.65, 0.7, 0.75,0.80, 0.92, 0.98)
+      
   
+    
     horizon$RootCN <- 45
   
     horizon$SoilCN <- 13
@@ -117,9 +125,12 @@ calc_apsim_variables <- function(horizons_cell_dt){
   
     horizon$sw <- horizon$dul
   
-    horizon$no3ppm <- horizon$OC
-  
-    horizon$nh4ppm <- horizon$OC*0.5
+    # horizon$no3ppm <- horizon$OC
+     
+    # horizon$nh4ppm <- horizon$OC*0.5
+    
+    horizon$no3kgha <- 20
+    horizon$nh4kgha <- 20
     
     soils_list[[which(mukey_seq == mukey_n)]] <- horizon
   
