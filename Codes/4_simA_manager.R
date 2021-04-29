@@ -18,24 +18,12 @@ if(server){
   codes_folder <-'C:/Users/germanm2/Documents'
 }
 
-
 # ---------------------------------------------------------------------------------------------
 # Load needed files
-trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds") %>% data.table() %>% .[,-'geometry']
+trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds") %>% 
+  data.table() %>% .[,-'geometry']
 
-# locs_sf <- readRDS('./trial_characterization_box/Data/rds_files/locs_sf.rds')
-# trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
- 
-# info_locs_dt <- data.table(openxlsx::read.xlsx('./trial_characterization_box/Data/info_trials_g2f_oct16.xlsx'))  %>% .[!is.na(Latitude1)] %>% 
-#   .[,.(year, loc_name, trial, planting_date1, gm, Irrigation, planting_date2,  rm)] 
 
-# trials_dt[,planting_date := openxlsx::convertToDate(Planting)]
-# info_locs_dt[,planting_date2 := openxlsx::convertToDate(planting_date2)]
-# info_locs_dt <- info_locs_dt %>% .[!is.na(planting_date2)]
-# coordinates_dt <- data.table(trial = fields_sf$trial, st_coordinates(st_centroid(fields_sf)))
-# 
-# 
-# fields_dt <- merge(info_locs_dt,  coordinates_dt, by = 'trial')
 trial_n = 1
 
 for(trial_n in 1:nrow(trials_dt)){
@@ -45,9 +33,9 @@ for(trial_n in 1:nrow(trials_dt)){
   
   # CREATE ALL FILES
   start1 <- Sys.time()
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simB_create_instructions.R"
-  "./trial_characterization_git/Codes/simB_create_instructions.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/simB_create_instructions.R'))
+  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simB_setup.R"
+  "./trial_characterization_git/Codes/simB_setup.R"
+  source(paste0(codes_folder, '/trial_characterization_git/Codes/simB_setup.R'))
   instructions1_rows <- nrow(instructions)
   
   #RUN ALL APSIM FILES

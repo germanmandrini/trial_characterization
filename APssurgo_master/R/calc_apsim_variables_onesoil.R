@@ -1,5 +1,5 @@
-source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/SaxtonRawls.R'))
-"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/SaxtonRawls.R"
+source(paste0(codes_folder, '/trial_characterization_git/APssurgo_master/R/SaxtonRawls.R'))
+"C:/Users/germanm2/Documents/trial_characterization_git/APssurgo_master/R/SaxtonRawls.R"
 # horizons_dt <- horizons_dt
 
 
