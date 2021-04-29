@@ -29,7 +29,6 @@ apsim_create_files <- function(i){
   #--- load the base apsim file ---# 
   base_doc <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/vr_value_v9.apsim")
   
-  
   #Clean the plots
   # for(x in xml2::xml_find_all(base_doc, '//Graph')[2:10]){xml2::xml_remove(x)}
   
@@ -151,9 +150,9 @@ apsim_create_files <- function(i){
   #--------------------------
   #--- extract soil data from the soil data base ---#
   # soils_database <- xmlParse('./Trial_crct_DIFM/Data/APssurgo_master/APSIM_soils/Soils_DIFM_bysoil.soils')
-  soils_database <- xml2::read_xml(paste(directory, 'soils_vr_value.soils', sep = '/'))
+  soils_database <- xml2::read_xml(paste(directory, 'trials_characterization.soils', sep = '/'))
   
-  soil_name2 <- paste('.//Soil[@name="', tolower(instructions_tmp$mukey), '"]', sep = '')
+  soil_name2 <- paste('.//Soil[@name="', tolower(soils_dt$mukey), '"]', sep = '')
   
   #--- replace soil ---#
   soil_temp2 <- xml_find_all(soils_database, soil_name2)
@@ -165,19 +164,21 @@ apsim_create_files <- function(i){
   
   #-----------------------------------------------------------------------------------------------
   # 1 - Insert the swim module
-  if(instructions_tmp$water == 'swim'){
-    swim_file <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/LongTermAssessmentsTileDrainage_ger.apsim")
-    
-    node_swim <- xml_find_all(swim_file,'//Swim')
-    
-    node_swat <- xml_find_all(base_doc,'//SoilWater')
-    xml_replace(node_swat, node_swim, .copy = TRUE)
-    rm(swim_file, node_swim,node_swat)
-  }#end if swim
+  # if(instructions_tmp$water == 'swim'){
+  #   swim_file <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/LongTermAssessmentsTileDrainage_ger.apsim")
+  #   
+  #   node_swim <- xml_find_all(swim_file,'//Swim')
+  #   
+  #   node_swat <- xml_find_all(base_doc,'//SoilWater')
+  #   xml_replace(node_swat, node_swim, .copy = TRUE)
+  #   rm(swim_file, node_swim,node_swat)
+  # }#end if swim
   #-----------------------------------------------------------------------------------------------
   # 2 - Add water_table to swat
-  if(instructions_tmp$water == 'swat' & !(is.na(instructions_tmp$watertable))){
-    watertable_n <- round(instructions_tmp$watertable)*10
+  horizons_dt
+  
+  if(!(is.na(horizons_dt2$watertable[1]))){
+    watertable_n <- round(horizons_dt2$watertable[1])*10
     if(watertable_n < 1500){watertable_n = 1500}
     node <- xml_find_all(base_doc,'//manager[@name="Empty manager"]/script')[2]
     empty_manager <- xml_text(node)
@@ -186,11 +187,11 @@ apsim_create_files <- function(i){
   }#end if swat
   #-----------------------------------------------------------------------------------------------
   # 3 - Update the Initial Conditions
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simE_update_ic.R"
-  "./trial_characterization_git/Codes/simE_update_ic.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/simE_update_ic.R')) #simplified version
-  #The initial residue assumes an alternation. Can be improved for account for other types of rotations
-  base_doc <- update_ic(base_doc, instructions_tmp)
+  # "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simE_update_ic.R"
+  # "./trial_characterization_git/Codes/simE_update_ic.R"
+  # source(paste0(codes_folder, '/trial_characterization_git/Codes/simE_update_ic.R')) #simplified version
+  # #The initial residue assumes an alternation. Can be improved for account for other types of rotations
+  # base_doc <- update_ic(base_doc, instructions_tmp)
 
   #--- Set the rate for the stab period ---#
   x <- xml_find_all(base_doc, ".//manager/ui/fert_amount_stab")
