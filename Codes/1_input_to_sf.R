@@ -39,7 +39,7 @@ trials_sf <- st_join(trials_sf, dplyr::select(locs_sf, id_loc))
 
 trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(Planting, format = "%m/%d/%Y"),
                                          day = format(planting_date,"%d"),
-                                         month = format(planting_date,"%m"),
+                                         month = format(planting_date,"%h"),
                                          year = format(planting_date,"%Y")) 
 
 

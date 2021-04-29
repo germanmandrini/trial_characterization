@@ -6,9 +6,9 @@
 # prepare clusters
 #===================================
 
-no_cores <- detectCores() * 7/8
-
-cl <- parallel::makeCluster(no_cores,type='SOCK')
+# no_cores <- detectCores() * 7/8
+# 
+# cl <- parallel::makeCluster(no_cores,type='SOCK')
 
 #===================================
 # parallelized simulations 
@@ -24,9 +24,7 @@ apsim_create_files <- function(i){
   library(xml2)
   library(data.table)
   library(dplyr)
-  
-  instructions_tmp <- instructions[i]
-  sim_name <- paste(unlist(instructions_tmp[,.(id_10, mukey, z, water)]), collapse = '_')
+
   
   #--- load the base apsim file ---# 
   base_doc <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/vr_value_v9.apsim")
@@ -36,7 +34,9 @@ apsim_create_files <- function(i){
   # for(x in xml2::xml_find_all(base_doc, '//Graph')[2:10]){xml2::xml_remove(x)}
   
   #--- edit the met directory ---#
-  met_dir <- paste(directory, '/met_files/z_',instructions_tmp$z,'.met', sep = '')
+  folder_name <- paste(directory, '/met_files',sep = '')
+  
+  met_dir <- paste(directory, '/met_files/trial_',trials_tmp$id_loc,'.met', sep = '')
   met_dir <- gsub("/", "\\", met_dir, fixed=TRUE)
   
   node <-  xml_find_all(base_doc,'//metfile/filename')
@@ -64,11 +64,11 @@ apsim_create_files <- function(i){
   #--------------------------
   # PLANTING DATE BY REGION
   #--------------------------
-  plant_dates_dt <- readRDS("./trial_characterization_box/Data/files_rds/plant_dates_dt.rds") %>%
-  .[id_10 == instructions_tmp$id_10] %>% .[1] 
+  # plant_dates_dt <- readRDS("./trial_characterization_box/Data/files_rds/plant_dates_dt.rds") %>%
+  # .[id_10 == instructions_tmp$id_10] %>% .[1] 
   # plant_dates_dt <- plant_dates_dt[z == instructions_tmp$z]
-  planting_start_corn <- plant_dates_dt$p_date_corn2[1]
-  planting_end_corn <- plant_dates_dt$p_date_corn2[1]
+  planting_start_corn <- paste(trials_tmp$day, trials_tmp$month, trials_tmp$year, sep = '/')
+  planting_end_corn <- planting_start_corn
   # planting_start_corn <- c('05-Apr', '05-Apr', '15-Apr')[instructions_tmp$region]
   # planting_end_corn <- c('10-Apr', '10-Apr', '20-Apr')[instructions_tmp$region]
   
@@ -84,8 +84,8 @@ apsim_create_files <- function(i){
   # planting_start_soy <- c('25-Apr', '30-Apr', '5-May')[instructions_tmp$region]
   # planting_end_soy <- c('5-May', '10-May', '15-May')[instructions_tmp$region]
   
-  planting_start_soy <- plant_dates_dt$p_date_soy2[1]
-  planting_end_soy <- plant_dates_dt$p_date_soy2[1]
+  planting_start_soy <- paste(trials_tmp$day, trials_tmp$month, trials_tmp$year, sep = '/')
+  planting_end_soy <- planting_start_soy
   
   x <- xml_find_all(base_doc, ".//manager/ui/date1_soy")
   xml_text(x) <- as.character(planting_start_soy)
@@ -96,13 +96,13 @@ apsim_create_files <- function(i){
   #--------------------------
   # CULTIVAR BY REGION
   #--------------------------
-  cultivar_corn <- paste0('B_', plant_dates_dt$hybrid_rm[1], '_iowa_hy')
+  cultivar_corn <- 'B_110_iowa_hy'
   
   x <- xml_find_all(base_doc, ".//manager/ui/cultivar_corn")
   xml_text(x) <- as.character(cultivar_corn)
   
   # cultivar_soy <- c('MG_4', 'MG_3', 'MG_2')[instructions_tmp$region]
-  cultivar_soy <- paste0('MG_', plant_dates_dt$soy_mg[1]+1)
+  cultivar_soy <- 'MG_3'
   x <- xml_find_all(base_doc, ".//manager/ui/cultivar_soy")
   xml_text(x) <- as.character(cultivar_soy)
   
@@ -122,8 +122,8 @@ apsim_create_files <- function(i){
   #--------------------------
   # CLOCK
   #--------------------------
-  date_start <-  '01/01/2010'
-  date_end <-'30/04/2012'
+  date_start <-  paste('1', 'Jan', trials_tmp$year, sep = '/')
+  date_end <-paste('31','Dec', trials_tmp$year, sep = '/')
   
   node <- xml_find_all(base_doc,'//clock/start_date')
   xml_text(node) <- date_start
@@ -134,10 +134,12 @@ apsim_create_files <- function(i){
   #--------------------------
   # ROTATION
   #--------------------------
-  
-  crop_seq <- c('maize', 'soybean', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
-  
-  
+  if(trials_tmp$Crop == 'Soybean'){
+    crop_seq <- c('soybean', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
+  }else{  
+    crop_seq <- c('maize', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
+  }
+    
   for(crop_n in 1:11){
   # crop_n = 1
     node <- xml_find_all(base_doc, paste0('//manager/ui/crop', crop_n))

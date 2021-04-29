@@ -31,9 +31,9 @@ unlink(directory ,recursive=TRUE)
 
 #----------------------------------------------------------------------------
 # WEATHER FILES
-source(paste0(codes_folder, '/trial_characterization_git/Codes/simC_make_met_files.R'))
-"C:/Users/germanm2/Documents/trial_characterization_git/Codes/simC_make_met_files.R"
-"./trial_characterization_git/Codes/simC_make_met_files.R"
+source(paste0(codes_folder, '/trial_characterization_git/Codes/6_simC_make_met_files.R'))
+"C:/Users/germanm2/Documents/trial_characterization_git/Codes/6_simC_make_met_files.R"
+"./trial_characterization_git/Codes/6_simC_make_met_files.R"
 
 #----------------------------------------------------------------------------
 # CREATE SOIL FILES
@@ -104,7 +104,7 @@ make_apsoils_toolbox(data_soils = horizons_dt2,
 # if(test_small) {instructions <- instructions[1,]}
 # if(FALSE) {instructions <- instructions[z==23,]}
 # print(instructions )
-"C:/Users/germanm2/Documents/trial_characterization_git/Codes/simD_create_apsim_files.R"
+"C:/Users/germanm2/Documents/trial_characterization_git/Codes/7_simD_create_apsim_files.R"
 "./trial_characterization_git/Codes/simD_create_apsim_files.R"
 source(paste0(codes_folder, '/trial_characterization_git/Codes/simD_create_apsim_files.R'))
 
