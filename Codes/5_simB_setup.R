@@ -106,6 +106,6 @@ make_apsoils_toolbox(data_soils = horizons_dt2,
 # print(instructions )
 "C:/Users/germanm2/Documents/trial_characterization_git/Codes/7_simD_create_apsim_files.R"
 "./trial_characterization_git/Codes/simD_create_apsim_files.R"
-source(paste0(codes_folder, '/trial_characterization_git/Codes/simD_create_apsim_files.R'))
+source(paste0(codes_folder, '/trial_characterization_git/Codes/7_simD_create_apsim_files.R'))
 
 

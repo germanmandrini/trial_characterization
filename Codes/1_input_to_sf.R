@@ -13,7 +13,7 @@ source('./Codes_useful/R.libraries.R')
 # Load the input file, with coordinates and planting dates
 
 trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
-
+trials_dt[,Crop := tolower(Crop)]
 trials_sf = st_as_sf(trials_dt, coords = c("Longitude", "Latitude"), 
                      crs = 4326, agr = "constant")
 
@@ -39,7 +39,7 @@ trials_sf <- st_join(trials_sf, dplyr::select(locs_sf, id_loc))
 
 trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(Planting, format = "%m/%d/%Y"),
                                          day = format(planting_date,"%d"),
-                                         month = format(planting_date,"%h"),
+                                         month = tolower(format(planting_date,"%b")),
                                          year = format(planting_date,"%Y")) 
 
 

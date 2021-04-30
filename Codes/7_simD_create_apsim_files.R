@@ -15,7 +15,7 @@
 #===================================
 #i =   1
 
-apsim_create_files <- function(i){
+apsim_create_files <- function(trials_tmp){
   # i = 1
   #--------------------------
   # preparation
@@ -27,7 +27,7 @@ apsim_create_files <- function(i){
 
   
   #--- load the base apsim file ---# 
-  base_doc <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/vr_value_v9.apsim")
+  base_doc <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/trial_crct.apsim")
   
   #Clean the plots
   # for(x in xml2::xml_find_all(base_doc, '//Graph')[2:10]){xml2::xml_remove(x)}
@@ -41,69 +41,25 @@ apsim_create_files <- function(i){
   node <-  xml_find_all(base_doc,'//metfile/filename')
   xml_text(node) <- met_dir
   
-  #--- edit modules directory ---#
-  #SurgaceOM Module
-  # module_dir <- paste0(getwd(), '/trial_characterization_box/Data/apsim_files/modules_edited/SurfaceOM_aug2020.xml')
-  # module_dir <- gsub("/", "\\", module_dir, fixed=TRUE)
-  # node <-  xml_find_all(base_doc,'//surfaceom/ini/filename')
-  # xml_text(node) <- module_dir
-  
-  #Maize Module
-  module_dir <- paste0(getwd(), '/trial_characterization_box/Data/apsim_files/modules_edited/Maize_aug2020.xml')
-  module_dir <- gsub("/", "\\", module_dir, fixed=TRUE)
-  node <-  xml_find_all(base_doc,'//maize/ini/filename')
-  xml_text(node) <- module_dir
-  
-  #Soybean Module
-  # module_dir <- paste0(getwd(), '/trial_characterization_box/Data/apsim_files/modules_edited/Soybean_v711.xml')
-  # module_dir <- gsub("/", "\\", module_dir, fixed=TRUE)
-  # node <-  xml_find_all(base_doc,'//soybean/ini/filename')
-  # xml_text(node) <- module_dir
-  
   #--------------------------
-  # PLANTING DATE BY REGION
+  # PLANTING DATE
   #--------------------------
-  # plant_dates_dt <- readRDS("./trial_characterization_box/Data/files_rds/plant_dates_dt.rds") %>%
-  # .[id_10 == instructions_tmp$id_10] %>% .[1] 
-  # plant_dates_dt <- plant_dates_dt[z == instructions_tmp$z]
-  planting_start_corn <- paste(trials_tmp$day, trials_tmp$month, trials_tmp$year, sep = '/')
-  planting_end_corn <- planting_start_corn
-  # planting_start_corn <- c('05-Apr', '05-Apr', '15-Apr')[instructions_tmp$region]
-  # planting_end_corn <- c('10-Apr', '10-Apr', '20-Apr')[instructions_tmp$region]
+  planting_start <- paste(trials_tmp$day, tolower(trials_tmp$month), trials_tmp$year, sep = '-')
   
-  x <- xml_find_all(base_doc, ".//manager/ui/date1_corn")
-  xml_text(x) <- as.character(planting_start_corn)
+  x <- xml_find_all(base_doc, ".//manager/ui/date")
+  xml_text(x) <- as.character(planting_start)
   
-  x <- xml_find_all(base_doc, ".//manager/ui/date2_corn")
-  xml_text(x) <- as.character(planting_end_corn)
-  
-  #Soy some days later
-  # planting_start_soy <- c('15-Apr', '20-Apr', '24-Apr')[instructions_tmp$region]
-  # planting_end_soy <- c('20-Apr', '24-Apr', '30-Apr')[instructions_tmp$region]
-  # planting_start_soy <- c('25-Apr', '30-Apr', '5-May')[instructions_tmp$region]
-  # planting_end_soy <- c('5-May', '10-May', '15-May')[instructions_tmp$region]
-  
-  planting_start_soy <- paste(trials_tmp$day, trials_tmp$month, trials_tmp$year, sep = '/')
-  planting_end_soy <- planting_start_soy
-  
-  x <- xml_find_all(base_doc, ".//manager/ui/date1_soy")
-  xml_text(x) <- as.character(planting_start_soy)
-  
-  x <- xml_find_all(base_doc, ".//manager/ui/date2_soy")
-  xml_text(x) <- as.character(planting_end_soy)
-  
+
   #--------------------------
-  # CULTIVAR BY REGION
+  # CROP AND CULTIVAR 
   #--------------------------
-  cultivar_corn <- 'B_110_iowa_hy'
+  x <- xml_find_all(base_doc, ".//manager/ui/crop")
+  xml_text(x) <- as.character(tolower(trials_tmp$Crop))
   
-  x <- xml_find_all(base_doc, ".//manager/ui/cultivar_corn")
-  xml_text(x) <- as.character(cultivar_corn)
   
-  # cultivar_soy <- c('MG_4', 'MG_3', 'MG_2')[instructions_tmp$region]
-  cultivar_soy <- 'MG_3'
-  x <- xml_find_all(base_doc, ".//manager/ui/cultivar_soy")
-  xml_text(x) <- as.character(cultivar_soy)
+  cultivar <- ifelse(trials_tmp$Crop == 'soybean', 'MG_3', 'B_110')
+  x <- xml_find_all(base_doc, ".//manager/ui/cultivar")
+  xml_text(x) <- as.character(cultivar)
   
   
   #--------------------------
@@ -113,16 +69,16 @@ apsim_create_files <- function(i){
   #   plant_population <- c('7', '8.5', '9')[instructions_tmp$region]
   # }
   
-  plant_population <- '8'
+  plant_population <- ifelse(trials_tmp$Crop == 'soybean', '30', '80')
   
-  x <- xml_find_all(base_doc, ".//manager/ui/density_corn")
+  x <- xml_find_all(base_doc, ".//manager/ui/density")
   xml_text(x) <- as.character(plant_population)
   
   #--------------------------
   # CLOCK
   #--------------------------
-  date_start <-  paste('1', 'Jan', trials_tmp$year, sep = '/')
-  date_end <-paste('31','Dec', trials_tmp$year, sep = '/')
+  date_start <-  paste('1', 'Jan', trials_tmp$year, sep = '-')
+  date_end <-paste('31','Dec', trials_tmp$year, sep = '-')
   
   node <- xml_find_all(base_doc,'//clock/start_date')
   xml_text(node) <- date_start
@@ -133,7 +89,7 @@ apsim_create_files <- function(i){
   #--------------------------
   # ROTATION
   #--------------------------
-  if(trials_tmp$Crop == 'Soybean'){
+  if(trials_tmp$Crop == 'soybean'){
     crop_seq <- c('soybean', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
   }else{  
     crop_seq <- c('maize', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
@@ -175,16 +131,14 @@ apsim_create_files <- function(i){
   # }#end if swim
   #-----------------------------------------------------------------------------------------------
   # 2 - Add water_table to swat
-  horizons_dt
-  
-  if(!(is.na(horizons_dt2$watertable[1]))){
-    watertable_n <- round(horizons_dt2$watertable[1])*10
-    if(watertable_n < 1500){watertable_n = 1500}
-    node <- xml_find_all(base_doc,'//manager[@name="Empty manager"]/script')[2]
-    empty_manager <- xml_text(node)
-    empty_manager2 <- gsub(pattern = '!water_table = 1000\n\n\n\nstart_of_day', replacement = paste0('water_table = ', watertable_n), empty_manager)
-    xml_text(node) <- empty_manager2
-  }#end if swat
+  # if(FALSE & !(is.na(horizons_dt2$watertable[1]))){
+  #   watertable_n <- round(horizons_dt2$watertable[1])*10
+  #   if(watertable_n < 1500){watertable_n = 1500}
+  #   node <- xml_find_all(base_doc,'//manager[@name="Empty manager"]/script')[2]
+  #   empty_manager <- xml_text(node)
+  #   empty_manager2 <- gsub(pattern = '!water_table = 1000\n\n\n\nstart_of_day', replacement = paste0('water_table = ', watertable_n), empty_manager)
+  #   xml_text(node) <- empty_manager2
+  # }#end if swat
   #-----------------------------------------------------------------------------------------------
   # 3 - Update the Initial Conditions
   # "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simE_update_ic.R"
@@ -194,65 +148,65 @@ apsim_create_files <- function(i){
   # base_doc <- update_ic(base_doc, instructions_tmp)
 
   #--- Set the rate for the stab period ---#
-  x <- xml_find_all(base_doc, ".//manager/ui/fert_amount_stab")
-  xml_text(x) <- "150"
-  
-  #--- Set the starter rate ---#
-  x <- xml_find_all(base_doc, ".//manager/ui/fert_amount_sow")
-  xml_text(x) <- "0"
-  
+  # x <- xml_find_all(base_doc, ".//manager/ui/fert_amount_stab")
+  # xml_text(x) <- "150"
+  # 
+  # #--- Set the starter rate ---#
+  # x <- xml_find_all(base_doc, ".//manager/ui/fert_amount_sow")
+  # xml_text(x) <- "0"
+  # 
   #--- CREATE A FOLDER TO SAVE FILES ---#
-  folder_name <- paste0(directory, '/', sim_name)
+  sim_name <- paste0('trial_', trial_n)
+  # folder_name <- paste0(directory, '/', sim_name)
   
-  if(file.exists(folder_name)){unlink(folder_name ,recursive=TRUE) }
-  dir.create(folder_name, recursive = TRUE)
+  # if(file.exists(folder_name)){unlink(folder_name ,recursive=TRUE) }
+  # dir.create(folder_name, recursive = TRUE)
   
   #--- Set the N rate for the trial period ---#
-  N_rates <- seq(0, 320, 10)
-  if(test_small) {N_rates <- 160}
-  if(regional_test){N_rates <- c(0, seq(16, 150, 28), seq(150, 200, 10), seq(212, 270, 28))}
-  # if(regional_test){N_rates <- 160}
-  # N_rates <- seq(0, 300, 25)
-  # N_rates <- c(0,260)
-  # N_rates <- c('Nminus', 'Nrich')
-  # N_rates <- 150
-  for(N_n in N_rates){
+  # N_rates <- 200
+  # if(test_small) {N_rates <- 160}
+  # if(regional_test){N_rates <- c(0, seq(16, 150, 28), seq(150, 200, 10), seq(212, 270, 28))}
+  # # if(regional_test){N_rates <- 160}
+  # # N_rates <- seq(0, 300, 25)
+  # # N_rates <- c(0,260)
+  # # N_rates <- c('Nminus', 'Nrich')
+  # # N_rates <- 150
+  # for(N_n in N_rates){
     # N_n = N_rates[1]
-    sim_name_n <- paste(sim_name, N_n, sep = '_')
+    # sim_name_n <- paste(sim_name, N_n, sep = '_')
     
     #----------------------------------
     #Change the name of the simulation
     x <-  xml_find_all(base_doc, ".//simulation")
-    xml2::xml_attrs(x, 'name')[[1]] <-  c(name = sim_name_n)
+    xml2::xml_attrs(x, 'name')[[1]] <-  c(name = sim_name)
     
     #----------------------------------
     #Change the name of the outputfile
     x <- xml_find_all(base_doc, ".//outputfile/filename")
-    xml_text(x) <- as.character(paste(sim_name_n, '.out', sep = ''))
+    xml_text(x) <- as.character(paste(sim_name, '.out', sep = ''))
     
     #----------------------------------
     #Apply the treatment at v5
-    x <- xml_find_all(base_doc, ".//manager/ui/fert_amount_yc")
-    xml_text(x) <- as.character(N_n)
+    # x <- xml_find_all(base_doc, ".//manager/ui/fert_amount_yc")
+    # xml_text(x) <- as.character(200)
     
     #--- save as a temporary xml file ---#
-    folder_name_n <- paste(folder_name, N_n, sep = '/')
-    dir.create(folder_name_n, recursive = TRUE)
-    filename <- paste0(sim_name_n, '.apsim')
+    # folder_name_n <- paste(folder_name, N_n, sep = '/')
+    # dir.create(folder_name_n, recursive = TRUE)
+    filename <- paste0(sim_name, '.apsim')
     
-    xml2::write_xml(base_doc, paste(folder_name_n,'/',filename,sep=''))
-  }
+    xml2::write_xml(base_doc, paste(directory,'/',filename,sep=''))
 }
 
-
-keep <- c('keep', 'apsim_create_files', 'instructions', 'directory', 'codes_folder', 'regional_test', 'test_small')
-# if(unique(instructions$type) == 'YC'){ keep <- append(keep, 'initial_conditions' )}
-# # #rm(list = ls()[!ls() %in% keep])
-
-parallel::clusterExport(cl, varlist = keep, envir=environment())
-
-results.list <- parallel::parLapply(cl, 1:nrow(instructions), function(x) apsim_create_files(x))
-
-# instructions <- rbindlist(results.list, fill = TRUE)
-
-stopCluster(cl)
+apsim_create_files(trials_tmp)
+# keep <- c('keep', 'apsim_create_files', 'instructions', 'directory', 'codes_folder', 'regional_test', 'test_small')
+# # if(unique(instructions$type) == 'YC'){ keep <- append(keep, 'initial_conditions' )}
+# # # #rm(list = ls()[!ls() %in% keep])
+# 
+# parallel::clusterExport(cl, varlist = keep, envir=environment())
+# 
+# results.list <- parallel::parLapply(cl, 1:nrow(instructions), function(x) apsim_create_files(x))
+# 
+# # instructions <- rbindlist(results.list, fill = TRUE)
+# 
+# stopCluster(cl)

@@ -26,7 +26,7 @@ trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds"
 
 trial_n = 1
 
-for(trial_n in 1:nrow(trials_dt)){
+# for(trial_n in 1:nrow(trials_dt)){
   
   trials_tmp <- trials_dt[trial_n]
   
