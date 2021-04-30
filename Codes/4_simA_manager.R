@@ -33,29 +33,29 @@ trial_n = 1
   
   # CREATE ALL FILES
   start1 <- Sys.time()
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simB_setup.R"
-  "./trial_characterization_git/Codes/simB_setup.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/simB_setup.R'))
-  instructions1_rows <- nrow(instructions)
+  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/5_simB_setup.R"
+  "./trial_characterization_git/Codes/5_simB_setup.R"
+  source(paste0(codes_folder, '/trial_characterization_git/Codes/5_simB_setup.R'))
+  # instructions1_rows <- nrow(instructions)
   
   #RUN ALL APSIM FILES
   start2 <- Sys.time()
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simF_run_files.R"
-  "./trial_characterization_git/Codes/simF_run_files.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/simF_run_files.R'))
+  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/8_simF_run_files.R"
+  "./trial_characterization_git/Codes/8_simF_run_files.R"
+  source(paste0(codes_folder, '/trial_characterization_git/Codes/8_simF_run_files.R'))
   
   #MERGE ALL THE OUTPUT
   start3 <- Sys.time()
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simG_merge_results.R"
-  "./trial_characterization_git/Codes/simG_merge_results.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/simG_merge_results.R'))
+  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/9_simG_merge_results.R"
+  "./trial_characterization_git/Codes/9_simG_merge_results.R"
+  source(paste0(codes_folder, '/trial_characterization_git/Codes/9_simG_merge_results.R'))
   
   start4 <- Sys.time()
   
   #MAKE YEARLY SUMMARY
   files_daily <- list.files(paste0('./trial_characterization_box/Data/yc_output_', batch_n, '_', water_n), pattern = paste0('^',id10_n, '_'), full.names = T)
   print(files_daily)
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/simH_daily_to_yearly.R"
+  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/10`"
   './trial_characterization_git/Codes/simH_daily_to_yearly.R'
   source(paste0(codes_folder, '/trial_characterization_git/Codes/simH_daily_to_yearly.R'))
   

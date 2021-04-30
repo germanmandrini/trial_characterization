@@ -64,11 +64,11 @@ if(server){
   library(stringr)
   no_cores <- detectCores() * 6/8
   registerDoParallel(cores=no_cores)  
-  cl <- makeCluster(no_cores) 
+  cl <- parallel::makeCluster(no_cores, ) 
   
   flist = list.files(directory, full.names = TRUE, recursive = TRUE, pattern = '.apsim')
   
-  if(test_small) {
+  if(FALSE) {
     flist <- flist[str_detect(string = flist, pattern = '_swim_160|_swat_160|_swat_212')] #OJO!!!!
   }
   
