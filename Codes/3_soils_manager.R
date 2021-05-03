@@ -37,5 +37,3 @@ all(soils_sf$mukey %in% horizons_dt$mukey)
 
 
 
-
-

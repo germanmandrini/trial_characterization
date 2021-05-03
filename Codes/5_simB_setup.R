@@ -49,7 +49,6 @@ horizons_dt[is.na(ph), ph := 6] #a few soils didn't have ph and apsim doesn't us
 horizons_dt2 <- calc_apsim_variables(horizons_dt)
 # horizons_cell2_dt[bottom >= restriction, XF_maize := 0] #limit the depth of the soil to the restriction
 
-horizons_dt2 <- cbind(horizons_dt2,trials_tmp[,.(X,Y)])
 make_apsoils_toolbox(data_soils = horizons_dt2, 
                      badge_name = 'trials_characterization', path = directory, crops = tolower(c("Maize","Soybean")))
 

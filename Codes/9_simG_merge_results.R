@@ -30,6 +30,7 @@ apsim_merge_data <- function(out_file_n){
   names(res) <- gsub('(\\()([0-9]+)(\\))$', '_\\2', names(res))
   names(res) <- gsub('\\()', '', names(res))
   
+  trial_n <-  str_extract(basename(file_path_sans_ext(out_file_n)), '[0-9]')
   res[,id_trial := trial_n]
   setcolorder(res, 'id_trial')
   
@@ -64,7 +65,7 @@ out_files_dt[,basename_f := file_path_sans_ext(basename(path))]
   results_collection_ls <- lapply(out_files_dt$path, function(out_file_n) apsim_merge_data(out_file_n))
   
   #SAVE THE OUTPUT
-  file_output_name <- paste('./trial_characterization_box/Data/apsim_output_daily/trial', trial_n, '.rds', sep = '')
+  file_output_name <- './trial_characterization_box/Data/apsim_output_daily/daily.rds'
   # if(cpsc){file_output_name <- paste('S:/Bioinformatics Lab/germanm2/trial_characterization/',stab_or_yc, id10_n,"_",mukey_n, '.rds', sep = '')}
   
   if(!file.exists(dirname(file_output_name))){ dir.create(dirname(file_output_name), recursive = TRUE) }

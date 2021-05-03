@@ -6,16 +6,16 @@
 # prepare clusters
 #===================================
 
-# no_cores <- detectCores() * 7/8
-# 
-# cl <- parallel::makeCluster(no_cores,type='SOCK')
+no_cores <- detectCores() * 7/8
+
+cl <- parallel::makeCluster(no_cores,type='SOCK')
 
 #===================================
 # parallelized simulations 
 #===================================
 #i =   1
 
-apsim_create_files <- function(trials_tmp){
+apsim_create_files <- function(i){
   # i = 1
   #--------------------------
   # preparation
@@ -25,7 +25,7 @@ apsim_create_files <- function(trials_tmp){
   library(data.table)
   library(dplyr)
 
-  
+  trials_tmp <- trials_dt[i]
   #--- load the base apsim file ---# 
   base_doc <- xml2::read_xml("./trial_characterization_box/Data/apsim_files/trial_crct.apsim")
   
@@ -35,7 +35,7 @@ apsim_create_files <- function(trials_tmp){
   #--- edit the met directory ---#
   folder_name <- paste(directory, '/met_files',sep = '')
   
-  met_dir <- paste(directory, '/met_files/trial_',trials_tmp$id_trial,'.met', sep = '')
+  met_dir <- paste(directory, '/met_files/loc_',trials_tmp$id_loc,'.met', sep = '')
   met_dir <- gsub("/", "\\", met_dir, fixed=TRUE)
   
   node <-  xml_find_all(base_doc,'//metfile/filename')
@@ -156,11 +156,11 @@ apsim_create_files <- function(trials_tmp){
   # xml_text(x) <- "0"
   # 
   #--- CREATE A FOLDER TO SAVE FILES ---#
-  sim_name <- paste0('trial_', trial_n)
-  # folder_name <- paste0(directory, '/', sim_name)
+  sim_name <- paste0('trial_', trials_tmp$id_trial)
+  folder_name <- paste0(directory, '/', sim_name)
   
-  # if(file.exists(folder_name)){unlink(folder_name ,recursive=TRUE) }
-  # dir.create(folder_name, recursive = TRUE)
+  if(file.exists(folder_name)){unlink(folder_name ,recursive=TRUE) }
+  dir.create(folder_name, recursive = TRUE)
   
   #--- Set the N rate for the trial period ---#
   # N_rates <- 200
@@ -195,18 +195,17 @@ apsim_create_files <- function(trials_tmp){
     # dir.create(folder_name_n, recursive = TRUE)
     filename <- paste0(sim_name, '.apsim')
     
-    xml2::write_xml(base_doc, paste(directory,'/',filename,sep=''))
+    xml2::write_xml(base_doc, paste(folder_name,'/',filename,sep=''))
 }
 
-apsim_create_files(trials_tmp)
-# keep <- c('keep', 'apsim_create_files', 'instructions', 'directory', 'codes_folder', 'regional_test', 'test_small')
-# # if(unique(instructions$type) == 'YC'){ keep <- append(keep, 'initial_conditions' )}
-# # # #rm(list = ls()[!ls() %in% keep])
-# 
-# parallel::clusterExport(cl, varlist = keep, envir=environment())
-# 
-# results.list <- parallel::parLapply(cl, 1:nrow(instructions), function(x) apsim_create_files(x))
-# 
-# # instructions <- rbindlist(results.list, fill = TRUE)
-# 
-# stopCluster(cl)
+keep <- c('keep', 'apsim_create_files', 'trials_dt', 'directory', 'codes_folder', 'soils_dt')
+# if(unique(instructions$type) == 'YC'){ keep <- append(keep, 'initial_conditions' )}
+# # #rm(list = ls()[!ls() %in% keep])
+
+parallel::clusterExport(cl, varlist = keep, envir=environment())
+
+results.list <- parallel::parLapply(cl, 1:nrow(trials_dt), function(x) apsim_create_files(x))
+
+# instructions <- rbindlist(results.list, fill = TRUE)
+
+stopCluster(cl)

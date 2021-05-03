@@ -3,7 +3,7 @@
 #===================================
 
 
-no_cores <- detectCores() * 7/8
+no_cores <- detectCores() * 6/8
 cl <- makeCluster(no_cores,type='SOCK')
 
 #===================================
@@ -200,6 +200,10 @@ results_list <- parLapply(cl, unique(soils_sf$mukey), function(x) get_horizons(x
 results_list_clean <- results_list[vapply(results_list, Negate(is.null), NA)]
 
 horizons_dt <- data.table::rbindlist(results_list_clean)
+
+info_dt <- data.table(soils_sf) %>% .[,.(id_loc, mukey, X, Y)]
+info_dt[,mukey := as.character(mukey)]
+horizons_dt <- merge(horizons_dt, info_dt, by = c('mukey')) %>% setcolorder(c('id_loc', 'mukey', 'X', 'Y'))
 
 saveRDS(horizons_dt, "./trial_characterization_box/Data/rds_files/horizons_dt.rds")
 
