@@ -35,7 +35,7 @@ apsim_create_files <- function(trials_tmp){
   #--- edit the met directory ---#
   folder_name <- paste(directory, '/met_files',sep = '')
   
-  met_dir <- paste(directory, '/met_files/trial_',trials_tmp$id_loc,'.met', sep = '')
+  met_dir <- paste(directory, '/met_files/trial_',trials_tmp$id_trial,'.met', sep = '')
   met_dir <- gsub("/", "\\", met_dir, fixed=TRUE)
   
   node <-  xml_find_all(base_doc,'//metfile/filename')

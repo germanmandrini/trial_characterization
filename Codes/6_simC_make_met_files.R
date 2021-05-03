@@ -11,18 +11,18 @@
 #===================================
 
 # make_met_files_paralell <- function(weather_cell.dt, directory){
-# no_cores <- detectCores() *7/8
-# cl <- parallel::makeCluster(no_cores,type='SOCK')
+no_cores <- detectCores() *1/2
+cl <- parallel::makeCluster(no_cores,type='SOCK')
 
 #===================================
 # parallelized simulations 
 #===================================
 
 
-make_met_files <- function(weather_dt, directory = directory){
-  # z_n = 'A1'
+make_met_files <- function(id_loc_n, weather_dt, directory = directory){
+  # id_loc_n = 1
   source(paste0(codes_folder, '/trial_characterization_git/Codes/APSIM_package.R')) #Load the APSIM package (is deprecated)
-  packages_need <- c('APSIM','dplyr', 'data.table', 'sf')
+  packages_need <- c('dplyr', 'data.table', 'sf')
   lapply(packages_need, require, character.only = TRUE)
   
  
@@ -32,7 +32,7 @@ make_met_files <- function(weather_dt, directory = directory){
   # PREPARE THE FILE
   units_input <- c("()", "()", "(MJ/m^2/day)", "(oC)", "(oC)", "(mm)", "(hours)") 
   setcolorder(weather_dt, c('year', 'day', 'radn', 'maxt', 'mint', 'rain', 'dayl'))
-  daymet.df <- data.frame(weather_dt[,-c('id_loc', 'X', 'Y')])
+  daymet.df <- data.frame(weather_dt[id_loc == id_loc_n,-c('id_loc', 'X', 'Y')])
   
   met_file_tmp <- prepareMet(daymet.df, 
                              lat = mean(weather_dt$Y), 
@@ -65,15 +65,22 @@ make_met_files <- function(weather_dt, directory = directory){
   
   if(!file.exists(folder_name)){dir.create(folder_name, recursive = TRUE)}
   
-  fileName_tmp <- paste(folder_name,'/trial_', trial_n, '.met', sep='')
+  fileName_tmp <- paste(folder_name,'/loc_', id_loc_n, '.met', sep='')
   
   writeMetFile(fileName_tmp, met_file_tmp)
   
   # return(folder_name2)
   
 }#end of loc_id_n loop
+keep <- c('keep', 'make_met_files', 'weather_dt', 'directory', 'codes_folder')
 
-make_met_files(weather_dt, directory)
+parallel::clusterExport(cl, varlist = keep, envir=environment())
+
+loc_seq <- unique(weather_dt$id_loc)
+results.list <- parallel::parLapply(cl, loc_seq, function(x) make_met_files(x, weather_dt, directory))
+
+stopCluster(cl)
+
 
 
 

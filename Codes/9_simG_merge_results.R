@@ -4,12 +4,7 @@ library(stringr)
 library(tools)
 # library(dplyr)
 
-# setwd('/projects/aces/germanm2/')
-# if(cpsc){setwd('C:/Users/germanm2/Box Sync/My_Documents')}#CPSC
-
 apsim_merge_data <- function(out_file_n){
-  # directory_output= paste0('./vr_value/Data/initial_conditions/cell_', id10_n)
-  # directory_output= paste0('./vr_value/Data/yc_output/cell_', id10_n)
   # out_file_n = out_files_dt$path[1]
   
   # results_collection_ls <- list()
@@ -35,12 +30,8 @@ apsim_merge_data <- function(out_file_n){
   names(res) <- gsub('(\\()([0-9]+)(\\))$', '_\\2', names(res))
   names(res) <- gsub('\\()', '', names(res))
   
-  name_sim <- basename(file_path_sans_ext(out_file_n))
-  info <- strsplit(name_sim, split = '_')[[1]]
-  res <- cbind(data.table(sim_name = name_sim,
-                          id_10 = info[1],
-                          mukey = info[2],
-                          z = info[3], water = info[5]),    res)
+  res[,id_trial := trial_n]
+  setcolorder(res, 'id_trial')
   
   
 }# end of out_file loop
@@ -73,7 +64,7 @@ out_files_dt[,basename_f := file_path_sans_ext(basename(path))]
   results_collection_ls <- lapply(out_files_dt$path, function(out_file_n) apsim_merge_data(out_file_n))
   
   #SAVE THE OUTPUT
-  file_output_name <- paste('./trial_characterization_box/Data/','yc_output/trial', trial_n, '.rds', sep = '')
+  file_output_name <- paste('./trial_characterization_box/Data/apsim_output_daily/trial', trial_n, '.rds', sep = '')
   # if(cpsc){file_output_name <- paste('S:/Bioinformatics Lab/germanm2/trial_characterization/',stab_or_yc, id10_n,"_",mukey_n, '.rds', sep = '')}
   
   if(!file.exists(dirname(file_output_name))){ dir.create(dirname(file_output_name), recursive = TRUE) }

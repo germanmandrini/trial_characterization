@@ -6,23 +6,23 @@ library(XML)
 #---------------------------------------------------------
 # Load soils and horizons and select the ones for this trials
 soils_dt <- readRDS("./trial_characterization_box/Data/rds_files/soils_sf.rds") %>% data.table() %>% .[,-'geometry']
-soils_dt <- soils_dt[id_loc == trials_tmp$id_loc]
+# soils_dt <- soils_dt[id_loc == trials_tmp$id_loc]
 
 horizons_dt <- readRDS("./trial_characterization_box/Data/rds_files/horizons_dt.rds") %>%
   .[bottom <= 200] #make soils to only 150 cm
 horizons_dt <- horizons_dt[mukey %in% soils_dt$mukey]
 
 weather_dt <- readRDS('./trial_characterization_box/Data/rds_files/weather_dt.rds')
-weather_dt <- weather_dt[id_loc == trials_tmp$id_loc & year == trials_tmp$year]
+# weather_dt <- weather_dt[id_loc == trials_tmp$id_loc & year == trials_tmp$year]
 
 #---------------------------------------------------------
 # Set the folder where the apsim files will be saved
 if(server){
-  directory <- paste('/home/germanm2/apsim_temp/trial_characterization/trial', trial_n, sep = '')
+  directory <- '/home/germanm2/apsim_temp/trial_characterization'
 }else if(cpsc){
-  directory <- paste('C:/apsim_temp/', Sys.info()["nodename"],'/trial_characterization/trial', trial_n, sep = '')
+  directory <- paste('C:/apsim_temp/', Sys.info()["nodename"],'/trial_characterization', sep = '')
 }else if(cluster){
-  directory <- paste('/projects/aces/germanm2/trial_characterization/trial', trial_n, sep = '')
+  directory <- '/projects/aces/germanm2/trial_characterization'
   # directory <- paste('/home/germanm2/scratch/apsim_temp/trial', trial_n, sep = '')
   # directory <- paste('/projects/aces/germanm2/scratch/trial', trial_n, sep = '')
 }
