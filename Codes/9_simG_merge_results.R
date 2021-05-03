@@ -63,8 +63,8 @@ out_files_dt[,basename_f := file_path_sans_ext(basename(path))]
 # for(mukey_n in mukey_seq){
 #   # mukey_n <- mukey_seq[1]
   # out_files_tmp <- out_files_dt[mukey == mukey_n]$path
-  
-  results_collection_ls <- lapply(out_files_dt$path, function(out_file_n) apsim_merge_data(out_file_n))
+
+results_collection_ls <- lapply(out_files_dt$path, function(out_file_n) apsim_merge_data(out_file_n))
   
   daily_dt <- rbindlist(results_collection_ls, fill = TRUE)
   daily_dt[,id_trial := as.integer(id_trial)]
