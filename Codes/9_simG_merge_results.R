@@ -22,7 +22,7 @@ apsim_merge_data <- function(out_file_n){
   #   res <- res[year > 2009]
   # }
   
-  exclude <- c('Date', 'stage', 'stage_name')
+  exclude <- c('Date', 'stage', 'stage_name', 'stagename', 'paddock.soybean.stagename','paddock.maize.stagename')
   res_col_names <- names(res)[!names(res) %in% exclude]
   
   suppressWarnings( res[, (res_col_names) := lapply(.SD, as.numeric), .SDcols = res_col_names])
@@ -31,11 +31,22 @@ apsim_merge_data <- function(out_file_n){
   names(res) <- gsub('\\()', '', names(res))
   
   name_sim <- basename(file_path_sans_ext(out_file_n))
-  trial_n <- strsplit(name_sim, split = '_')[[1]][[2]]
+  trial_n <- as.integer(strsplit(name_sim, split = '_')[[1]][[2]])
+  crop_n <- strsplit(name_sim, split = '_')[[1]][[3]]
   
   res[,id_trial := trial_n]
   setcolorder(res, 'id_trial')
   
+  #remove other crop
+  remove_this_crop <- ifelse(crop_n == 'soybean', 'maize', 'soybean')
+  
+  remove_this_columns <- names(res)[stringr::str_detect(string = names(res), pattern = remove_this_crop)]
+  res[ , (remove_this_columns) := NULL]
+  
+  #remove word paddock from names
+  names(res) <- gsub(x = names(res), pattern = paste0('paddock.', crop_n, '.'), replacement = '')
+  
+  return(res)
   
 }# end of out_file loop
 #COLLECT AND MERGE THE DATA
@@ -66,15 +77,14 @@ out_files_dt[,basename_f := file_path_sans_ext(basename(path))]
 
 results_collection_ls <- lapply(out_files_dt$path, function(out_file_n) apsim_merge_data(out_file_n))
   
-  daily_dt <- rbindlist(results_collection_ls, fill = TRUE)
-  daily_dt[,id_trial := as.integer(id_trial)]
-  daily_dt <- daily_dt[order(id_trial)]
-  
-  #SAVE THE OUTPUT
-  file_output_name <- './trial_characterization_box/Data/rds_files/apsim_output_daily.rds'
-  # if(cpsc){file_output_name <- paste('S:/Bioinformatics Lab/germanm2/trial_characterization/',stab_or_yc, id10_n,"_",mukey_n, '.rds', sep = '')}
-  
-  # if(!file.exists(dirname(file_output_name))){ dir.create(dirname(file_output_name), recursive = TRUE) }
-  
-  saveRDS(daily_dt, file_output_name)
-  data.table::fwrite(daily_dt, './trial_characterization_box/Data/output/apsim_output_daily.csv')
+daily_dt <- rbindlist(results_collection_ls, fill = TRUE)
+daily_dt <- daily_dt[order(id_trial)]
+
+#SAVE THE OUTPUT
+file_output_name <- './trial_characterization_box/Data/rds_files/apsim_output_daily.rds'
+# if(cpsc){file_output_name <- paste('S:/Bioinformatics Lab/germanm2/trial_characterization/',stab_or_yc, id10_n,"_",mukey_n, '.rds', sep = '')}
+
+# if(!file.exists(dirname(file_output_name))){ dir.create(dirname(file_output_name), recursive = TRUE) }
+
+saveRDS(daily_dt, file_output_name)
+data.table::fwrite(daily_dt, './trial_characterization_box/Data/output/apsim_output_daily.csv')

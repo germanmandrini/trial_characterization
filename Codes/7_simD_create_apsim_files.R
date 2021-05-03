@@ -161,7 +161,7 @@ apsim_create_files <- function(i){
   # xml_text(x) <- "0"
   # 
   #--- CREATE A FOLDER TO SAVE FILES ---#
-  sim_name <- paste0('trial_', trials_tmp$id_trial)
+  sim_name <- paste('trial', trials_tmp$id_trial, trials_tmp$Crop, sep = '_')
   folder_name <- paste0(directory, '/', sim_name)
   
   if(file.exists(folder_name)){unlink(folder_name ,recursive=TRUE) }

@@ -45,7 +45,7 @@ if(FALSE){
 #===================================
 
 
-make_yearly_summary <- function(file_n){
+make_yearly_summary <- function(daily_dt){
   # file_n =  "S:/Bioinformatics Lab/germanm2/trial_characterization_cluster/yc_output/324_680866.rds"
   # file_n <- files_daily[1]
   # file_n <- "S:/Bioinformatics Lab/germanm2/vr_value_v2_cluster/yc_output_1/1367_159876.rds"
@@ -54,6 +54,21 @@ make_yearly_summary <- function(file_n){
   #--------------------------
   # preparation
   #--------------------------
+  
+  daily_dt
+  
+  #=====================================================================================================#
+  # Yearly data
+  yearly_data <- daily_dt[,.(rain = sum(Rain),
+                               Radn = mean(Radn),
+                             MaxT = mean(MaxT),
+                             MinT = mean(MinT),
+                               temp_stress = mean(temp_stress)), by = .(id_trial, stage)]
+  
+  daily_dt[id_trial == 1,.(stage = mean(stage), 
+                           .N,
+              day = mean(day)), by = .(stagename )]
+  
   #--- load libraries ---#
   library(data.table)
   library(stringr)
