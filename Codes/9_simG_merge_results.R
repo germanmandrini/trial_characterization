@@ -10,7 +10,7 @@ library(tools)
 apsim_merge_data <- function(out_file_n){
   # directory_output= paste0('./vr_value/Data/initial_conditions/cell_', id10_n)
   # directory_output= paste0('./vr_value/Data/yc_output/cell_', id10_n)
-  # out_file_n = out_files_tmp[1]
+  # out_file_n = out_files_dt$path[1]
   
   # results_collection_ls <- list()
   res <- try(fread(out_file_n, header = T), TRUE)

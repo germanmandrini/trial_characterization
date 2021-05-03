@@ -37,7 +37,7 @@ trial_n = 1
   "./trial_characterization_git/Codes/5_simB_setup.R"
   source(paste0(codes_folder, '/trial_characterization_git/Codes/5_simB_setup.R'))
   # instructions1_rows <- nrow(instructions)
-  
+ 
   #RUN ALL APSIM FILES
   start2 <- Sys.time()
   "C:/Users/germanm2/Documents/trial_characterization_git/Codes/8_simF_run_files.R"
@@ -53,7 +53,7 @@ trial_n = 1
   start4 <- Sys.time()
   
   #MAKE YEARLY SUMMARY
-  files_daily <- list.files(paste0('./trial_characterization_box/Data/yc_output_', batch_n, '_', water_n), pattern = paste0('^',id10_n, '_'), full.names = T)
+  files_daily <- paste0('./trial_characterization_box/Data/yc_output/', paste0('trial',trial_n, '.rds'))
   print(files_daily)
   "C:/Users/germanm2/Documents/trial_characterization_git/Codes/10`"
   './trial_characterization_git/Codes/simH_daily_to_yearly.R'
