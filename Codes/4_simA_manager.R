@@ -51,7 +51,7 @@ trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds"
   source(paste0(codes_folder, '/trial_characterization_git/Codes/9_simG_merge_results.R'))
   
   start4 <- Sys.time()
-}
+
   #MAKE YEARLY SUMMARY
   files_daily <- paste0('./trial_characterization_box/Data/yc_output/', paste0('trial',trial_n, '.rds'))
   print(files_daily)

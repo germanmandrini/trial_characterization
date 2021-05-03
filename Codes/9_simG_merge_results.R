@@ -5,7 +5,7 @@ library(tools)
 # library(dplyr)
 
 apsim_merge_data <- function(out_file_n){
-  # out_file_n = out_files_dt$path[1]
+  # out_file_n = out_files_dt$path[111]
   
   # results_collection_ls <- list()
   res <- try(fread(out_file_n, header = T), TRUE)
@@ -30,7 +30,9 @@ apsim_merge_data <- function(out_file_n){
   names(res) <- gsub('(\\()([0-9]+)(\\))$', '_\\2', names(res))
   names(res) <- gsub('\\()', '', names(res))
   
-  trial_n <-  str_extract(basename(file_path_sans_ext(out_file_n)), '[0-9]')
+  name_sim <- basename(file_path_sans_ext(out_file_n))
+  trial_n <- strsplit(name_sim, split = '_')[[1]][[2]]
+  
   res[,id_trial := trial_n]
   setcolorder(res, 'id_trial')
   
@@ -64,11 +66,15 @@ out_files_dt[,basename_f := file_path_sans_ext(basename(path))]
   
   results_collection_ls <- lapply(out_files_dt$path, function(out_file_n) apsim_merge_data(out_file_n))
   
+  daily_dt <- rbindlist(results_collection_ls, fill = TRUE)
+  daily_dt[,id_trial := as.integer(id_trial)]
+  daily_dt <- daily_dt[order(id_trial)]
+  
   #SAVE THE OUTPUT
-  file_output_name <- './trial_characterization_box/Data/apsim_output_daily/daily.rds'
+  file_output_name <- './trial_characterization_box/Data/rds_files/apsim_output_daily.rds'
   # if(cpsc){file_output_name <- paste('S:/Bioinformatics Lab/germanm2/trial_characterization/',stab_or_yc, id10_n,"_",mukey_n, '.rds', sep = '')}
   
-  if(!file.exists(dirname(file_output_name))){ dir.create(dirname(file_output_name), recursive = TRUE) }
+  # if(!file.exists(dirname(file_output_name))){ dir.create(dirname(file_output_name), recursive = TRUE) }
   
-  saveRDS(rbindlist(results_collection_ls, fill = TRUE), file_output_name)
-  
+  saveRDS(daily_dt, file_output_name)
+  data.table::fwrite(daily_dt, './trial_characterization_box/Data/output/apsim_output_daily.csv')

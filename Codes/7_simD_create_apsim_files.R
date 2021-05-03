@@ -89,17 +89,22 @@ apsim_create_files <- function(i){
   #--------------------------
   # ROTATION
   #--------------------------
-  if(trials_tmp$Crop == 'soybean'){
-    crop_seq <- c('soybean', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
-  }else{  
-    crop_seq <- c('maize', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
-  }
-    
-  for(crop_n in 1:11){
-  # crop_n = 1
-    node <- xml_find_all(base_doc, paste0('//manager/ui/crop', crop_n))
-    xml_text(node) <- crop_seq[crop_n]
-  }
+  
+  # remove_this_crop <- ifelse(trials_tmp$Crop == 'soybean', 'maize', 'soybean')
+  # node <- xml_find_all(base_doc,paste0('//', remove_this_crop))
+  # xml2::xml_remove(node)
+  
+  # if(trials_tmp$Crop == 'soybean'){
+  #   crop_seq <- c('soybean', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
+  # }else{  
+  #   crop_seq <- c('maize', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil',  'nil',  'nil')
+  # }
+  #   
+  # for(crop_n in 1:11){
+  # # crop_n = 1
+  #   node <- xml_find_all(base_doc, paste0('//manager/ui/crop', crop_n))
+  #   xml_text(node) <- crop_seq[crop_n]
+  # }
   
   #--------------------------
   # SOIL
