@@ -62,7 +62,7 @@ if(server){
   # WINDOWS
   library(doParallel)
   library(stringr)
-  no_cores <- detectCores() * 6/8
+  no_cores <- detectCores() * 7/8
   registerDoParallel(cores=no_cores)
   cl <- parallel::makeCluster(no_cores, )
   

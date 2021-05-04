@@ -17,7 +17,7 @@ trials_dt[,Crop := tolower(Crop)]
 trials_sf = st_as_sf(trials_dt, coords = c("Longitude", "Latitude"), 
                      crs = 4326, agr = "constant")
 
-us_states4326.sf <- st_transform(us_states, 4326) %>% dplyr::select(NAME, REGION)
+us_states4326.sf <- st_transform(us_states, 4326) %>% dplyr::select(state = NAME, region = REGION)
 
 
 (plot1 <- tm_shape(us_states4326.sf) + tm_polygons()   +
@@ -51,6 +51,4 @@ trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(Planting, forma
 
 saveRDS(trials_sf, './trial_characterization_box/Data/rds_files/trials_sf.rds')
 saveRDS(locs_sf, './trial_characterization_box/Data/rds_files/locs_sf.rds')
-input_clean_dt <- data.table(trials_sf) %>% .[,-c('geometry', 'id_loc')] %>%
-  setcolorder(c('id_trial'))
-data.table::fwrite(input_clean_dt, './trial_characterization_box/Data/output/input_clean.csv')
+

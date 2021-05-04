@@ -114,10 +114,10 @@ make_yearly_summary <- function(daily_dt){
   
   
   
-  final_dt <- merge(trials_dt[,.(id_trial, id_loc)], yearly_dt, by = 'id_trial')
+  final_dt <- merge(trials_dt[,.(Site, Planting, Crop, State,  Region, X, Y, id_trial, id_loc)], yearly_dt, by = 'id_trial')
   final_dt <- merge(final_dt, horizons_dt2, by = 'id_loc')
   final_dt <- merge(final_dt, period_wide_dt, by = 'id_trial')
-  
+  final_dt[,id_loc := NULL]
   
   ggplot(final_dt)+
     geom_point(aes(x = swdef_expan_4, y = yield ))

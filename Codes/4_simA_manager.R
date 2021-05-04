@@ -22,59 +22,52 @@ if(server){
 # Load needed files
 trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds") %>% 
   data.table() %>% .[,-'geometry']
-# 
-# 
-# trial_n = 1
-# 
-# for(trial_n in 1:nrow(trials_dt)){
-  
-  # trials_tmp <- trials_dt[trial_n]
-  
-  
-  # CREATE ALL FILES
-  start1 <- Sys.time()
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/5_simB_setup.R"
-  "./trial_characterization_git/Codes/5_simB_setup.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/5_simB_setup.R'))
-  # instructions1_rows <- nrow(instructions)
- 
-  #RUN ALL APSIM FILES
-  start2 <- Sys.time()
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/8_simF_run_files.R"
-  "./trial_characterization_git/Codes/8_simF_run_files.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/8_simF_run_files.R'))
-  
-  #MERGE ALL THE OUTPUT
-  start3 <- Sys.time()
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/9_simG_merge_results.R"
-  "./trial_characterization_git/Codes/9_simG_merge_results.R"
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/9_simG_merge_results.R'))
-  
-  start4 <- Sys.time()
 
-  #MAKE YEARLY SUMMARY
-  "C:/Users/germanm2/Documents/trial_characterization_git/Codes/10_simH_daily_to_yearly.R"
-  './trial_characterization_git/Codes/simH_daily_to_yearly.R'
-  source(paste0(codes_folder, '/trial_characterization_git/Codes/simH_daily_to_yearly.R'))
+
+# CREATE ALL FILES
+start1 <- Sys.time()
+"C:/Users/germanm2/Documents/trial_characterization_git/Codes/5_simB_setup.R"
+"./trial_characterization_git/Codes/5_simB_setup.R"
+source(paste0(codes_folder, '/trial_characterization_git/Codes/5_simB_setup.R'))
+# instructions1_rows <- nrow(instructions)
+
+#RUN ALL APSIM FILES
+start2 <- Sys.time()
+"C:/Users/germanm2/Documents/trial_characterization_git/Codes/8_simF_run_files.R"
+"./trial_characterization_git/Codes/8_simF_run_files.R"
+source(paste0(codes_folder, '/trial_characterization_git/Codes/8_simF_run_files.R'))
+
+#MERGE ALL THE OUTPUT
+start3 <- Sys.time()
+"C:/Users/germanm2/Documents/trial_characterization_git/Codes/9_simG_merge_results.R"
+"./trial_characterization_git/Codes/9_simG_merge_results.R"
+source(paste0(codes_folder, '/trial_characterization_git/Codes/9_simG_merge_results.R'))
+
+start4 <- Sys.time()
+
+#MAKE YEARLY SUMMARY
+"C:/Users/germanm2/Documents/trial_characterization_git/Codes/10_simH_daily_to_yearly.R"
+'./trial_characterization_git/Codes/10_simH_daily_to_yearly.R'
+source(paste0(codes_folder, '/trial_characterization_git/Codes/10_simH_daily_to_yearly.R'))
   
-  unlink(directory, recursive = TRUE)
+unlink(directory, recursive = TRUE)
   
-  start5 <- Sys.time()
-  
-  time_track_tmp <- data.table(id_10 = id10_n,
-                               mukey_n = length(unique(instructions$mukey)),
-                               time = start1,
-                               inst = instructions1_rows,
-                               create = as.numeric(difftime(start2, start1, units = "mins")),
-                               run = as.numeric(difftime(start3, start2, units = "mins")),
-                               merge_save = as.numeric(difftime(start4, start3, units = "mins")),
-                               yearly_summary = as.numeric(difftime(start5, start4, units = "mins")),
-                               cell = as.numeric(difftime(start5, start1, units = "mins")))
-  print(time_track_tmp)
-  
-  folder_name <- paste0('./trial_characterization_box/Data/time_track_', batch_n)
-  if(!file.exists(folder_name)){dir.create(folder_name, recursive = TRUE)}
-  saveRDS(time_track_tmp, paste0(folder_name,'/time_track_',id10_n,'.rds'))
+start5 <- Sys.time()
+
+time_track_tmp <- data.table(id_10 = id10_n,
+                             mukey_n = length(unique(instructions$mukey)),
+                             time = start1,
+                             inst = instructions1_rows,
+                             create = as.numeric(difftime(start2, start1, units = "mins")),
+                             run = as.numeric(difftime(start3, start2, units = "mins")),
+                             merge_save = as.numeric(difftime(start4, start3, units = "mins")),
+                             yearly_summary = as.numeric(difftime(start5, start4, units = "mins")),
+                             cell = as.numeric(difftime(start5, start1, units = "mins")))
+print(time_track_tmp)
+
+folder_name <- paste0('./trial_characterization_box/Data/time_track_', batch_n)
+if(!file.exists(folder_name)){dir.create(folder_name, recursive = TRUE)}
+saveRDS(time_track_tmp, paste0(folder_name,'/time_track_',id10_n,'.rds'))
   
   
   
