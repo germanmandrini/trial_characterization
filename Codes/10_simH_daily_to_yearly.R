@@ -72,9 +72,11 @@ make_yearly_summary <- function(daily_dt){
   daily_dt[stagename == 'out' & day >= 180, period := 6]
   daily_dt[is.na(period)]
   
-  data.table(period = 0:6,
+  periods_code_soybean_dt <- data.table(period = 0:6,
              period_name = c('fallow_initial', 'veg_early', 'veg_late', 
                              'floral_initiation', 'flowering', 'grain_fill', 'fallow_end'))
+  
+  data.table::fwrite(periods_code_dt, './trial_characterization_box/Data/output/periods_code_soybean_dt.csv')
   
   daily_dt[id_trial == 1,.(stage = mean(stage), 
                            .N,
