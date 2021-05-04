@@ -99,7 +99,7 @@ make_yearly_summary <- function(daily_dt){
   
   #--------------------------
   # Get some year variables (are not by period)
-  yearly_dt <- daily_dt[,.(yield = round(max(Y, na.rm = TRUE)/0.85,0),
+  yearly_dt <- daily_dt[,.(yield_sim = round(max(Y, na.rm = TRUE)/0.85,0),
                            whc = round(max(dul_dep) - max(ll15_dep),2)), by = id_trial]
 
   #--------------------------
@@ -114,7 +114,7 @@ make_yearly_summary <- function(daily_dt){
   
   
   
-  final_dt <- merge(trials_dt[,.(Site, Planting, Crop, State,  Region, X, Y, id_trial, id_loc)], yearly_dt, by = 'id_trial')
+  final_dt <- merge(trials_dt[,.(Site, Planting, Crop, state,  region, X, Y, id_trial, id_loc)], yearly_dt, by = 'id_trial')
   final_dt <- merge(final_dt, horizons_dt2, by = 'id_loc')
   final_dt <- merge(final_dt, period_wide_dt, by = 'id_trial')
   final_dt[,id_loc := NULL]
