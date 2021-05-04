@@ -10,15 +10,15 @@
   <o:Author>Mandrini, German</o:Author>
   <o:LastAuthor>Mandrini, German</o:LastAuthor>
   <o:Revision>2</o:Revision>
-  <o:TotalTime>30</o:TotalTime>
-  <o:Created>2021-05-04T20:12:00Z</o:Created>
-  <o:LastSaved>2021-05-04T20:12:00Z</o:LastSaved>
+  <o:TotalTime>33</o:TotalTime>
+  <o:Created>2021-05-04T20:20:00Z</o:Created>
+  <o:LastSaved>2021-05-04T20:20:00Z</o:LastSaved>
   <o:Pages>2</o:Pages>
   <o:Words>390</o:Words>
-  <o:Characters>2224</o:Characters>
+  <o:Characters>2223</o:Characters>
   <o:Lines>18</o:Lines>
   <o:Paragraphs>5</o:Paragraphs>
-  <o:CharactersWithSpaces>2609</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>2608</o:CharactersWithSpaces>
   <o:Version>16.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
@@ -29,6 +29,8 @@
 <link rel=3DcolorSchemeMapping href=3D"Readme_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
+  <w:HideSpellingErrors/>
+  <w:HideGrammaticalErrors/>
   <w:SpellingState>Clean</w:SpellingState>
   <w:GrammarState>Clean</w:GrammarState>
   <w:TrackMoves>false</w:TrackMoves>
@@ -57,7 +59,7 @@
    <w:__Grammarly_42____i>H4sIAAAAAAAEAKtWckksSQxILCpxzi/NK1GyMqwFAAEhoTITA=
 AAA</w:__Grammarly_42____i>
    <w:__Grammarly_42___1>H4sIAAAAAAAEAKtWcslP9kxRslIyNDYyMzEzNrA0MjE3NzI1MT=
-dS0lEKTi0uzszPAykwrAUA4sMvxCwAAAA=3D</w:__Grammarly_42___1>
+dS0lEKTi0uzszPAykwrgUAYKEZ9iwAAAA=3D</w:__Grammarly_42___1>
   </w:DocumentVariables>
   <m:mathPr>
    <m:mathFont m:val=3D"Cambria Math"/>
@@ -1071,9 +1073,6 @@ span.Heading2Char
 span.SpellE
 	{mso-style-name:"";
 	mso-spl-e:yes;}
-span.GramE
-	{mso-style-name:"";
-	mso-gram-e:yes;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
@@ -1143,19 +1142,8 @@ break-word'>
 <p class=3DMsoNormal style=3D'mso-margin-top-alt:auto;margin-bottom:12.0pt;
 line-height:normal;mso-outline-level:1'><b><span style=3D'font-size:24.0pt;
 font-family:"Segoe UI",sans-serif;mso-fareast-font-family:"Times New Roman";
-mso-font-kerning:18.0pt'>Trial characterization using APSIM (</span></b><sp=
-an
-class=3DSpellE><span class=3DGramE><span style=3D'font-size:24.0pt;font-fam=
-ily:"Segoe UI",sans-serif;
-mso-fareast-font-family:"Times New Roman";mso-font-kerning:18.0pt'>Enviroty=
-ping</span></span></span><span
-class=3DGramE><b><span style=3D'font-size:24.0pt;font-family:"Segoe UI",san=
-s-serif;
-mso-fareast-font-family:"Times New Roman";mso-font-kerning:18.0pt'>&nbsp;</=
-span>)</span></b></span><b><span
-style=3D'font-size:24.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-fon=
-t-family:
-"Times New Roman";mso-font-kerning:18.0pt'><o:p></o:p></span></b></p>
+mso-font-kerning:18.0pt'>Trial characterization using APSIM (<span
+class=3DSpellE>Envirotyping</span>)<o:p></o:p></span></b></p>
 
 <p class=3DMsoNormal style=3D'margin-top:.25in;margin-right:0in;margin-bott=
 om:12.0pt;
@@ -1203,10 +1191,10 @@ t-family:
 <p class=3DMsoNormal style=3D'margin-bottom:12.0pt;line-height:normal'><span
 style=3D'font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-fon=
 t-family:
-"Times New Roman"'>The codes are enumerated in the order they need to be ex=
-ecuted.
-Only the first four codes need to be run, and these four codes will call the
-other ones.<o:p></o:p></span></p>
+"Times New Roman"'>The codes are enumerated in the order they need to be
+executed. Only the first four codes need to be run, and these four codes wi=
+ll
+call the other ones.<o:p></o:p></span></p>
 
 <p class=3DMsoNormal style=3D'margin-top:.25in;margin-right:0in;margin-bott=
 om:12.0pt;
@@ -1873,9 +1861,8 @@ margin-left:0in;line-height:normal;mso-outline-level:2'><span style=3D'font=
 -size:
 12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:"Times New=
  Roman"'>The
-variables are divided into periods (example: rain_7 means rain during perio=
-d 7).
-The periods are the following:<o:p></o:p></span></p>
+variables are divided into periods (example: rain_7 means rain during period
+7). The periods are the following:<o:p></o:p></span></p>
 
 <table class=3DMsoNormalTable border=3D0 cellspacing=3D0 cellpadding=3D0 wi=
 dth=3D276
@@ -2155,9 +2142,14 @@ t-family:
 "Times New Roman"'>Questions about the code and methodology: German Mandrin=
 i, <span
 class=3DSpellE>Dpt</span> of Crop Sciences, University of Illinois at
-Urbana-Champaign,&nbsp;<a href=3D"mailto:germanmandrini@gmail.com"><span
-style=3D'color:windowtext'>germanmandrini@gmail.com</span></a><o:p></o:p></=
-span></p>
+Urbana-Champaign,&nbsp;</span><a href=3D"mailto:germanmandrini@gmail.com"><=
+span
+style=3D'font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-fon=
+t-family:
+"Times New Roman";color:windowtext'>germanmandrini@gmail.com</span></a><span
+style=3D'font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-fon=
+t-family:
+"Times New Roman"'><o:p></o:p></span></p>
 
 <p class=3DMsoNormal style=3D'mso-margin-bottom-alt:auto;line-height:normal=
 '><span
@@ -2165,9 +2157,13 @@ style=3D'font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-fon=
 t-family:
 "Times New Roman"'>Questions about collaborations: Nicolas F Martin, <span
 class=3DSpellE>Dpt</span> of Crop Sciences, University of Illinois at
-Urbana-Champaign,&nbsp;<a href=3D"mailto:nfmartin@illinois.edu"><span
-style=3D'color:windowtext'>nfmartin@illinois.edu</span></a><o:p></o:p></spa=
-n></p>
+Urbana-Champaign,&nbsp;</span><a href=3D"mailto:nfmartin@illinois.edu"><span
+style=3D'font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-fon=
+t-family:
+"Times New Roman";color:windowtext'>nfmartin@illinois.edu</span></a><span
+style=3D'font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-fon=
+t-family:
+"Times New Roman"'><o:p></o:p></span></p>
 
 <p class=3DMsoNormal><o:p>&nbsp;</o:p></p>
 
@@ -2176,89 +2172,3 @@ n></p>
 </body>
 
 </html>
-
-------=_NextPart_01D740F7.E8DC2400
-Content-Location: file:///C:/EA821E05/Readme_files/themedata.thmx
-Content-Transfer-Encoding: base64
-Content-Type: application/vnd.ms-officetheme
-
-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
-AA==
-
-------=_NextPart_01D740F7.E8DC2400
-Content-Location: file:///C:/EA821E05/Readme_files/colorschememapping.xml
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/xml
-
-<?xml version=3D"1.0" encoding=3D"UTF-8" standalone=3D"yes"?>
-<a:clrMap xmlns:a=3D"http://schemas.openxmlformats.org/drawingml/2006/main"=
- bg1=3D"lt1" tx1=3D"dk1" bg2=3D"lt2" tx2=3D"dk2" accent1=3D"accent1" accent=
-2=3D"accent2" accent3=3D"accent3" accent4=3D"accent4" accent5=3D"accent5" a=
-ccent6=3D"accent6" hlink=3D"hlink" folHlink=3D"folHlink"/>
-------=_NextPart_01D740F7.E8DC2400
-Content-Location: file:///C:/EA821E05/Readme_files/filelist.xml
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/xml; charset="utf-8"
-
-<xml xmlns:o=3D"urn:schemas-microsoft-com:office:office">
- <o:MainFile HRef=3D"../Readme.htm"/>
- <o:File HRef=3D"themedata.thmx"/>
- <o:File HRef=3D"colorschememapping.xml"/>
- <o:File HRef=3D"filelist.xml"/>
-</xml>
-------=_NextPart_01D740F7.E8DC2400--
-
