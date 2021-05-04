@@ -11,6 +11,8 @@ The caracterization variables can be used to caracterize the environment of the 
 ## About the code
 The codes are numbered in order they need to be excecuted. Only the first four codes need to be run, and the other ones will be called by this four codes.
 
+## Output variables
+
 ## Contact
 Questions about the code and methodology: German Mandrini, Dpt of Crop Sciences, University of Illinois at Urbana-Champaign, germanmandrini@gmail.com
 
