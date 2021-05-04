@@ -8,10 +8,10 @@
  <o:DocumentProperties>
   <o:Author>Mandrini, German</o:Author>
   <o:LastAuthor>Mandrini, German</o:LastAuthor>
-  <o:Revision>2</o:Revision>
-  <o:TotalTime>34</o:TotalTime>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>38</o:TotalTime>
   <o:Created>2021-05-04T20:24:00Z</o:Created>
-  <o:LastSaved>2021-05-04T20:24:00Z</o:LastSaved>
+  <o:LastSaved>2021-05-04T20:28:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
   <o:Words>390</o:Words>
   <o:Characters>2223</o:Characters>
@@ -28,6 +28,7 @@
 <link rel=colorSchemeMapping href="Readme_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
+  <w:Zoom>140</w:Zoom>
   <w:HideSpellingErrors/>
   <w:HideGrammaticalErrors/>
   <w:SpellingState>Clean</w:SpellingState>
@@ -846,16 +847,9 @@ break-word'>
 
 <div class=WordSection1>
 
-<p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:12.0pt;
-line-height:normal;mso-outline-level:1'><b><span style='font-size:24.0pt;
-font-family:"Segoe UI",sans-serif;mso-fareast-font-family:"Times New Roman";
-mso-font-kerning:18.0pt'>Trial characterization using APSIM (<span
-class=SpellE>Envirotyping</span>)<o:p></o:p></span></b></p>
+<h1>Trial characterization using APSIM (<span class=SpellE>Envirotyping</span>)</h1>
 
-<p class=MsoNormal style='margin-top:.25in;margin-right:0in;margin-bottom:12.0pt;
-margin-left:0in;line-height:normal;mso-outline-level:2'><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman"'>Objective<o:p></o:p></span></b></p>
+<h1>Objective</h1>
 
 <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:12.0pt;
 line-height:normal;mso-outline-level:1'><span style='font-size:12.0pt;
@@ -866,10 +860,7 @@ sample. It downloads soil and weather information, and it runs APSIM for each
 trial. In the output will add columns to the original csv with soil, weather,
 and APSIM information.<o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-top:.25in;margin-right:0in;margin-bottom:12.0pt;
-margin-left:0in;line-height:normal;mso-outline-level:2'><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman"'>Use<o:p></o:p></span></b></p>
+<h1>Use</h1>
 
 <p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'><span
 style='font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
@@ -878,10 +869,7 @@ the environment of the trials, find clusters of trials with similar conditions,
 use the variables as regressors to explain the trial results, extrapolate
 results to areas where trials were not implemented.<o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-top:.25in;margin-right:0in;margin-bottom:12.0pt;
-margin-left:0in;line-height:normal;mso-outline-level:2'><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman"'>About the code<o:p></o:p></span></b></p>
+<h1>About the code</h1>
 
 <p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'><span
 style='font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
@@ -889,10 +877,7 @@ style='font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-famil
 executed. Only the first four codes need to be run, and these four codes will
 call the other ones.<o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-top:.25in;margin-right:0in;margin-bottom:12.0pt;
-margin-left:0in;line-height:normal;mso-outline-level:2'><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman"'>Output variables<o:p></o:p></span></b></p>
+<h1>Output variables</h1>
 
 <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=552
  style='width:413.75pt;border-collapse:collapse;mso-yfti-tbllook:1184;
@@ -1328,12 +1313,7 @@ style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-famil
  </tr>
 </table>
 
-<p class=MsoNormal style='margin-top:.25in;margin-right:0in;margin-bottom:12.0pt;
-margin-left:0in;line-height:normal;mso-outline-level:2'><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman";color:white;mso-color-alt:windowtext'>Crop periods</span></b><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman"'><o:p></o:p></span></b></p>
+<h1><span style='color:white;mso-color-alt:windowtext'>Crop periods</span></h1>
 
 <p class=MsoNormal style='margin-top:.25in;margin-right:0in;margin-bottom:12.0pt;
 margin-left:0in;line-height:normal;mso-outline-level:2'><span style='font-size:
@@ -1513,12 +1493,7 @@ variables are divided into periods (example: rain_7 means rain during period
  </tr>
 </table>
 
-<p class=MsoNormal style='margin-top:.25in;margin-right:0in;margin-bottom:12.0pt;
-margin-left:0in;line-height:normal;mso-outline-level:2'><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman";color:white;mso-color-alt:windowtext'>Contact</span></b><b><span
-style='font-size:18.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
-"Times New Roman"'><o:p></o:p></span></b></p>
+<h1><span style='color:white;mso-color-alt:windowtext'>Contact</span></h1>
 
 <p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'><span
 style='font-size:12.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:
