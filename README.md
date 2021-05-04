@@ -9,7 +9,7 @@ In the output will add columns to the original csv with soil, weather and APSIM 
 The caracterization variables can be used to caracterize the environment of the trials, find clusters of trials with similar conditions, use the variables as regressors to explain the trial results, extrapolate results to areas were trials were not done.
 
 # About the code
-
+The codes are numbered in order they need to be excecuted. Only the first four codes need to be run, and the other ones will be called by this four codes.
 
 # Contact
 Questions about the code and methodology: German Mandrini, Dpt of Crop Sciences, University of Illinois at Urbana-Champaign, germanmandrini@gmail.com
