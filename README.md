@@ -2,8 +2,7 @@
 
 # Objective
 
-This repository takes a csv with information from trials (crop, planting date, latitude, longitude). The csv should always have the same columns as the sample. It downloads soil and weather information, and it runs APSIM for each trial. In the output will add columns to the original csv with soil, weather, and APSIM information.
-
+Repository for crop trials envirotyping. It takes a csv with lat and long and plantings dates of several trials. Downloads weather and soil data and runs APSIM. Returns meaningful variables aggregated by crop stages
 # Use
 
 The characterization variables can be used to characterize the environment of the trials, find clusters of trials with similar conditions, use the variables as regressors to explain the trial results, extrapolate results to areas where trials were not implemented.
