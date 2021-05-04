@@ -62,25 +62,51 @@ make_yearly_summary <- function(daily_dt){
   #=====================================================================================================#
   # Set the periods
   
-  
-  daily_dt[stagename == 'out' & day < 180, period := 0]
-  daily_dt[stagename == 'sowing' | stagename == 'germination'| stagename == 'emergence', period := 1]
-  daily_dt[stagename == 'end_of_juvenile' , period := 2]
-  daily_dt[stagename == 'floral_initiation' , period := 3]
-  daily_dt[stagename == 'flowering' , period := 4]
-  daily_dt[stagename == 'start_grain_fill'| stagename == 'end_grain_fill'| stagename == 'maturity' , period := 5]
-  daily_dt[stagename == 'out' & day >= 180, period := 6]
-  daily_dt[is.na(period)]
+  #Soybean ------------------------------------------------------------------------------------
+  daily_dt[crop == 'soybean' & stagename == 'out' & day < 180, period := 0]
+  daily_dt[crop == 'soybean' & stagename == 'sowing' | stagename == 'germination'| stagename == 'emergence', period := 1]
+  daily_dt[crop == 'soybean' & stagename == 'end_of_juvenile' , period := 2]
+  daily_dt[crop == 'soybean' & stagename == 'floral_initiation' , period := 3]
+  daily_dt[crop == 'soybean' & stagename == 'flowering' , period := 4]
+  daily_dt[crop == 'soybean' & stagename == 'start_grain_fill'| stagename == 'end_grain_fill'| stagename == 'maturity' , period := 5]
+  daily_dt[crop == 'soybean' & stagename == 'out' & day >= 180, period := 6]
+  daily_dt[crop == 'soybean' & is.na(period)]
   
   periods_code_soybean_dt <- data.table(period = 0:6,
              period_name = c('fallow_initial', 'veg_early', 'veg_late', 
                              'floral_initiation', 'flowering', 'grain_fill', 'fallow_end'))
   
-  data.table::fwrite(periods_code_dt, './trial_characterization_box/Data/output/periods_code_soybean_dt.csv')
+  data.table::fwrite(periods_code_soybean_dt, './trial_characterization_box/Data/output/periods_code_soybean_dt.csv')
   
   daily_dt[id_trial == 1,.(stage = mean(stage), 
                            .N,
                            day = mean(day)), by = .(period )]
+  
+  #Maize ------------------------------------------------------------------------------------
+  daily_dt[id_trial == 127,.(stage = mean(stage), 
+                           .N,
+                           day = mean(day)), by = .(stagename  )]
+  daily_dt[crop == 'maize' & (stagename == 'nocrop' & day < 180)]
+  daily_dt[crop == 'maize' & (stagename == 'nocrop' & day < 180), period := 0]
+  daily_dt[crop == 'maize' & (stagename == 'sowing' | stagename == 'germination'| stagename == 'emergence'), period := 1]
+  daily_dt[crop == 'maize' & (stagename == 'end_of_juvenile' | stagename == 'floral_initiation'), period := 2]
+  daily_dt[crop == 'maize' & (stagename == 'flag_leaf' | stagename == 'flowering'), period := 3]
+  daily_dt[crop == 'maize' & (stagename == 'start_grain_fill'& stage < 8.5), period := 4]
+  daily_dt[crop == 'maize' & (stagename == 'start_grain_fill'& stage >= 8.5), period := 5]
+  daily_dt[crop == 'maize' & (stagename == 'nocrop' & day >= 180), period := 6]
+  daily_dt[crop == 'maize' & is.na(period)]
+  
+  periods_code_maize_dt <- data.table(period = 0:6,
+                                        period_name = c('fallow_initial', 'veg_early', 'veg_late', 
+                                                        'flowering', 'grain_fill1', 'grain_fill2', 'fallow_end'))
+  
+  data.table::fwrite(periods_code_maize_dt, './trial_characterization_box/Data/output/periods_code_maize_dt.csv')
+  
+  
+  daily_dt[id_trial == 127,.(stage = mean(stage), 
+                           .N,
+                           day = mean(day)), by = .(period )]
+  
   #--------------------------
   #Aggregate by period
   

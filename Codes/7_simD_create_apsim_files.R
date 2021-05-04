@@ -69,7 +69,7 @@ apsim_create_files <- function(i){
   #   plant_population <- c('7', '8.5', '9')[instructions_tmp$region]
   # }
   
-  plant_population <- ifelse(trials_tmp$Crop == 'soybean', '30', '80')
+  plant_population <- ifelse(trials_tmp$Crop == 'soybean', '30', '8')
   
   x <- xml_find_all(base_doc, ".//manager/ui/density")
   xml_text(x) <- as.character(plant_population)
@@ -77,8 +77,8 @@ apsim_create_files <- function(i){
   #--------------------------
   # CLOCK
   #--------------------------
-  date_start <-  paste('1', 'Jan', trials_tmp$year, sep = '-')
-  date_end <-paste('31','Dec', trials_tmp$year, sep = '-')
+  date_start <-  paste('1', '1', trials_tmp$year, sep = '/')
+  date_end <-paste('31','12', trials_tmp$year, sep = '/')
   
   node <- xml_find_all(base_doc,'//clock/start_date')
   xml_text(node) <- date_start

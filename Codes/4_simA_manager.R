@@ -29,7 +29,7 @@ start1 <- Sys.time()
 "C:/Users/germanm2/Documents/trial_characterization_git/Codes/5_simB_setup.R"
 "./trial_characterization_git/Codes/5_simB_setup.R"
 source(paste0(codes_folder, '/trial_characterization_git/Codes/5_simB_setup.R'))
-# instructions1_rows <- nrow(instructions)
+instructions_rows <- nrow(trials_dt)
 
 #RUN ALL APSIM FILES
 start2 <- Sys.time()

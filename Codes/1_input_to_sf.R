@@ -14,6 +14,7 @@ source('./Codes_useful/R.libraries.R')
 
 trials_dt <- data.table::fread('./trial_characterization_box/Data/input.csv') 
 trials_dt[,Crop := tolower(Crop)]
+trials_dt[,Crop := 'maize']
 trials_sf = st_as_sf(trials_dt, coords = c("Longitude", "Latitude"), 
                      crs = 4326, agr = "constant")
 

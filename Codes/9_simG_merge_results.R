@@ -7,6 +7,11 @@ library(tools)
 apsim_merge_data <- function(out_file_n){
   # out_file_n = out_files_dt$path[111]
   
+  #Information from file name
+  name_sim <- basename(file_path_sans_ext(out_file_n))
+  trial_n <- as.integer(strsplit(name_sim, split = '_')[[1]][[2]])
+  crop_n <- strsplit(name_sim, split = '_')[[1]][[3]]
+  
   # results_collection_ls <- list()
   res <- try(fread(out_file_n, header = T), TRUE)
   
@@ -27,15 +32,12 @@ apsim_merge_data <- function(out_file_n){
   
   suppressWarnings( res[, (res_col_names) := lapply(.SD, as.numeric), .SDcols = res_col_names])
   
-  names(res) <- gsub('(\\()([0-9]+)(\\))$', '_\\2', names(res))
-  names(res) <- gsub('\\()', '', names(res))
-  
-  name_sim <- basename(file_path_sans_ext(out_file_n))
-  trial_n <- as.integer(strsplit(name_sim, split = '_')[[1]][[2]])
-  crop_n <- strsplit(name_sim, split = '_')[[1]][[3]]
+  # names(res) <- gsub('(\\()([0-9]+)(\\))$', '_\\2', names(res))
+  # names(res) <- gsub('\\()', '', names(res))
   
   res[,id_trial := trial_n]
-  setcolorder(res, 'id_trial')
+  res[,crop := crop_n]
+  setcolorder(res, c('id_trial', 'crop'))
   
   #remove other crop
   remove_this_crop <- ifelse(crop_n == 'soybean', 'maize', 'soybean')
@@ -45,6 +47,8 @@ apsim_merge_data <- function(out_file_n){
   
   #remove word paddock from names
   names(res) <- gsub(x = names(res), pattern = paste0('paddock.', crop_n, '.'), replacement = '')
+  
+  
   
   return(res)
   
