@@ -81,10 +81,6 @@ daily_dt <- rbindlist(results_collection_ls, fill = TRUE)
 daily_dt <- daily_dt[order(id_trial)]
 
 #SAVE THE OUTPUT
-file_output_name <- './trial_characterization_box/Data/rds_files/apsim_output_daily.rds'
-# if(cpsc){file_output_name <- paste('S:/Bioinformatics Lab/germanm2/trial_characterization/',stab_or_yc, id10_n,"_",mukey_n, '.rds', sep = '')}
 
-# if(!file.exists(dirname(file_output_name))){ dir.create(dirname(file_output_name), recursive = TRUE) }
-
-saveRDS(daily_dt, file_output_name)
+saveRDS(daily_dt, './trial_characterization_box/Data/rds_files/apsim_output_daily.rds')
 data.table::fwrite(daily_dt, './trial_characterization_box/Data/output/apsim_output_daily.csv')
