@@ -1,18 +1,15 @@
-# Simulations for fields in Illinois using APSIM
-Codes to run multiple APSIM simulations on Illinois-US
+# Trial caracterization code using APSIM
 
 # Objective
-This codes allow to obtain a database simulated with APSIM for 4200 fields over 30 years.
-The codes start by obtianing the field information , the soils parameters and the weather files
-Then it run simulations with increasing Nitrogen rates
-Finally it merges the output and evaluates different N recommendation tools.
+This code takes a csv with information from trials (crop, planting date, latitude, longitude). The csv should always have the same columns as the sample.
+It downloads soil and weather information and it runs APSIM for each trial.
+In the output will add columns to the original csv with soil, weather and APSIM information .
+
+# Use
+The caracterization variables can be used to caracterize the environment of the trials, find clusters of trials with similar conditions, use the variables as regressors to explain the trial results, extrapolate results to areas were trials were not done.
 
 # About the code
-The scripts that obtain soil data and transforms it into APSIM files is adapted from https://github.com/rmartinezferia/APssurgo
-Read the 
 
-# Data inputs
-The file called codes_index.pdf provides a description of each script and a link to additional data needed to run the code
 
 # Contact
 Questions about the code and methodology: German Mandrini, Dpt of Crop Sciences, University of Illinois at Urbana-Champaign, germanmandrini@gmail.com
