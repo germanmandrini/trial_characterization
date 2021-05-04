@@ -53,8 +53,6 @@ trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds"
   start4 <- Sys.time()
 
   #MAKE YEARLY SUMMARY
-  daily_dt <- readRDS('./trial_characterization_box/Data/rds_files/apsim_output_daily.rds')
-  
   "C:/Users/germanm2/Documents/trial_characterization_git/Codes/10_simH_daily_to_yearly.R"
   './trial_characterization_git/Codes/simH_daily_to_yearly.R'
   source(paste0(codes_folder, '/trial_characterization_git/Codes/simH_daily_to_yearly.R'))

@@ -102,8 +102,22 @@ make_yearly_summary <- function(daily_dt){
   yearly_dt <- daily_dt[,.(yield = round(max(Y, na.rm = TRUE)/0.85,0),
                            whc = round(max(dul_dep) - max(ll15_dep),2)), by = id_trial]
 
+  #--------------------------
+  # Soil information
+  horizons_dt <- readRDS("./trial_characterization_box/Data/rds_files/horizons_dt.rds") %>% 
+    .[bottom <= 20]
   
-  final_dt <- merge(yearly_dt, period_wide_dt, by = 'id_trial')
+  horizons_dt2 <- horizons_dt[,.( sand = round(mean(sand),2), 
+                          clay = round(mean(clay),2),
+                          om = round(mean(om),2),
+                          ph = round(mean(ph),2)), by = id_loc]
+  
+  
+  
+  final_dt <- merge(trials_dt[,.(id_trial, id_loc)], yearly_dt, by = 'id_trial')
+  final_dt <- merge(final_dt, horizons_dt2, by = 'id_loc')
+  final_dt <- merge(final_dt, period_wide_dt, by = 'id_trial')
+  
   
   ggplot(final_dt)+
     geom_point(aes(x = swdef_expan_4, y = yield ))
@@ -114,5 +128,9 @@ make_yearly_summary <- function(daily_dt){
 
 #----------------------------------------------------------------------------
 
-final_dt <- make_yearly_summary(daily_dt)
+daily_dt <- readRDS('./trial_characterization_box/Data/rds_files/apsim_output_daily.rds')
 
+caracterization_dt <- make_yearly_summary(daily_dt)
+
+saveRDS(caracterization_dt, './trial_characterization_box/Data/rds_files/caracterization_dt.rds')
+data.table::fwrite(caracterization_dt, './trial_characterization_box/Data/output/caracterization.csv')
