@@ -1,23 +1,17 @@
-<html xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:w="urn:schemas-microsoft-com:office:word"
-xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
-xmlns="http://www.w3.org/TR/REC-html40">
-
 <head>
 <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
-<link rel=File-List href="README_files/filelist.xml">
+<link rel=File-List href="Readme_files/filelist.xml">
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>Mandrini, German</o:Author>
   <o:LastAuthor>Mandrini, German</o:LastAuthor>
-  <o:Revision>2</o:Revision>
-  <o:TotalTime>34</o:TotalTime>
-  <o:Created>2021-05-04T20:30:00Z</o:Created>
-  <o:LastSaved>2021-05-04T20:30:00Z</o:LastSaved>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>38</o:TotalTime>
+  <o:Created>2021-05-04T20:24:00Z</o:Created>
+  <o:LastSaved>2021-05-04T20:28:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
   <o:Words>390</o:Words>
   <o:Characters>2223</o:Characters>
@@ -30,10 +24,11 @@ xmlns="http://www.w3.org/TR/REC-html40">
   <o:AllowPNG/>
  </o:OfficeDocumentSettings>
 </xml><![endif]-->
-<link rel=themeData href="README_files/themedata.thmx">
-<link rel=colorSchemeMapping href="README_files/colorschememapping.xml">
+<link rel=themeData href="Readme_files/themedata.thmx">
+<link rel=colorSchemeMapping href="Readme_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
+  <w:Zoom>140</w:Zoom>
   <w:HideSpellingErrors/>
   <w:HideGrammaticalErrors/>
   <w:SpellingState>Clean</w:SpellingState>
