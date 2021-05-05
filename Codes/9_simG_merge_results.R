@@ -32,8 +32,8 @@ apsim_merge_data <- function(out_file_n){
   
   suppressWarnings( res[, (res_col_names) := lapply(.SD, as.numeric), .SDcols = res_col_names])
   
-  # names(res) <- gsub('(\\()([0-9]+)(\\))$', '_\\2', names(res))
-  # names(res) <- gsub('\\()', '', names(res))
+  names(res) <- gsub('(\\()([0-9]+)(\\))$', '_\\2', names(res))
+  names(res) <- gsub('\\()', '', names(res))
   
   res[,id_trial := trial_n]
   res[,crop := crop_n]

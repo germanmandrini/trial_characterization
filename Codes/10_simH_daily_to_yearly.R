@@ -63,32 +63,29 @@ make_yearly_summary <- function(daily_dt){
   # Set the periods
   
   #Soybean ------------------------------------------------------------------------------------
+  daily_dt[,.N, crop]
   daily_dt[id_trial == 1,.(stage = mean(stage), 
                            .N,
                            day = mean(day)), by = .(stagename  )]
   
   
   daily_dt[crop == 'soybean' & (stagename == 'out' & day < 180), period := 0]
-  daily_dt[crop == 'soybean' & (stagename == 'sowing' | stagename == 'germination'| stagename == 'emergence'), period := 1]
-  daily_dt[crop == 'soybean' & (stagename == 'end_of_juvenile'), period := 2]
-  daily_dt[crop == 'soybean' & (stagename == 'floral_initiation'), period := 3]
+  daily_dt[crop == 'soybean' & (stagename == 'sowing' | stagename == 'germination'| stagename == 'emergence' |stagename == 'end_of_juvenile'), period := 1]
+  daily_dt[crop == 'soybean' & (stagename == 'floral_initiation'), period := 2]
   daily_dt[crop == 'soybean' & (stagename == 'flowering'), period := 3]
-  daily_dt[crop == 'soybean' & (stagename == 'start_grain_fill'| stagename == 'end_grain_fill'| stagename == 'maturity'), period := 5]
+  daily_dt[crop == 'soybean' & (stagename == 'start_grain_fill'& stage < 7.5), period := 4]
+  daily_dt[crop == 'soybean' & (stagename == 'start_grain_fill'& stage >= 7.5), period := 5]                                
+  daily_dt[crop == 'soybean' & (stagename == 'end_grain_fill'| stagename == 'maturity'), period := 5]
   daily_dt[crop == 'soybean' & (stagename == 'out' & day >= 180), period := 6]
   daily_dt[crop == 'soybean' & is.na(period)]
   
-  periods_code_soybean_dt <- data.table(period = 0:6,
-             period_name = c('fallow_initial', 'veg_early', 'veg_late', 
-                             'flowering', 'grain_fill1', 'grain_fill2', 'fallow_end'))
   
-  data.table::fwrite(periods_code_soybean_dt, './trial_characterization_box/Data/output/periods_code_soybean_dt.csv')
-  
-  daily_dt[id_trial == 2,.(stage = mean(stage), 
+  daily_dt[id_trial == 1,.(stage = mean(stage), 
                            .N,
                            day = mean(day)), by = .(period )]
   
   #Maize ------------------------------------------------------------------------------------
-  daily_dt[id_trial == 1,.(stage = mean(stage), 
+  daily_dt[id_trial == 2,.(stage = mean(stage), 
                            .N,
                            day = mean(day)), by = .(stagename  )]
   daily_dt[crop == 'maize' & (stagename == 'nocrop' & day < 180)]
@@ -107,14 +104,14 @@ make_yearly_summary <- function(daily_dt){
   daily_dt[crop == 'maize' & (stagename == 'nocrop' & day >= 180), period := 6]
   daily_dt[crop == 'maize' & is.na(period)]
   
-  periods_code_maize_dt <- data.table(period = 0:6,
+  periods_code_dt <- data.table(period = 0:6,
                                         period_name = c('fallow_initial', 'veg_early', 'veg_late', 
-                                                        'flowering', 'grain_fill1', 'grain_fill2', 'fallow_end'))
+                                                        'flowering', 'grainf_early', 'grainf_late', 'fallow_end'))
   
-  data.table::fwrite(periods_code_maize_dt, './trial_characterization_box/Data/output/periods_code_maize_dt.csv')
+  data.table::fwrite(periods_code_dt, './trial_characterization_box/Data/output/periods_code.csv')
   
   
-  daily_dt[id_trial == 1,.(stage = mean(stage), 
+  daily_dt[id_trial == 2,.(stage = mean(stage), 
                            .N,
                            day = mean(day)), by = .(period )]
   
@@ -140,7 +137,7 @@ make_yearly_summary <- function(daily_dt){
   # Get some year variables (are not by period)
   yearly_dt <- daily_dt[,.(yield_sim = round(max(Y, na.rm = TRUE)/0.85,0),
                            whc = round(max(dul_dep) - max(ll15_dep),2)), by = id_trial]
-
+  
   #--------------------------
   # Soil information
   horizons_dt <- readRDS("./trial_characterization_box/Data/rds_files/horizons_dt.rds") %>% 
@@ -168,6 +165,8 @@ make_yearly_summary <- function(daily_dt){
 #----------------------------------------------------------------------------
 
 daily_dt <- readRDS('./trial_characterization_box/Data/rds_files/apsim_output_daily.rds')
+
+c(1:127)[!1:127 %in% (daily_dt$id_trial %>% unique())]
 
 caracterization_dt <- make_yearly_summary(daily_dt)
 
