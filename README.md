@@ -45,9 +45,9 @@ The variables are divided into periods (example: rain\_7 means rain during perio
 | 0 | fallow\_initial |
 | 1 | veg\_early |
 | 2 | veg\_late |
-| 3 | floral\_initiation |
-| 4 | flowering |
-| 5 | grain\_fill |
+| 3 | flowering |
+| 4 | grainf\_early |
+| 5 | grainf\_late |
 | 6 | fallow\_end |
 
 # Contact
