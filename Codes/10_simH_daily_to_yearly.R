@@ -150,14 +150,15 @@ make_yearly_summary <- function(daily_dt){
   
   
   
-  final_dt <- merge(trials_dt[,.(Site, Planting, Crop, state,  region, X, Y, id_trial, id_loc)], yearly_dt, by = 'id_trial')
-  final_dt <- merge(final_dt, horizons_dt2, by = 'id_loc')
-  final_dt <- merge(final_dt, period_wide_dt, by = 'id_trial')
+  final_dt <- merge(trials_dt[,.(Site, Planting, Crop, state,  region, X, Y, id_trial, id_loc, year)], yearly_dt, by = 'id_trial', all.x = T)
+  final_dt <- merge(final_dt, horizons_dt2, by = 'id_loc', all.x = T)
+  final_dt <- merge(final_dt, period_wide_dt, by = 'id_trial', all.x = T)
   final_dt[,id_loc := NULL]
-  
+  final_dt[year == 2020]
+
   ggplot(final_dt)+
-    geom_point(aes(x = swdef_expan_4, y = yield ))
-  
+    geom_point(aes(x = swdef_expan_3, y = yield_sim)) +
+    facet_free(.~Crop)
   
     return(final_dt)
 }
