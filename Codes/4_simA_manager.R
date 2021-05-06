@@ -54,24 +54,20 @@ unlink(directory, recursive = TRUE)
   
 start5 <- Sys.time()
 
-time_track_tmp <- data.table(id_10 = id10_n,
-                             mukey_n = length(unique(instructions$mukey)),
+time_track_tmp <- data.table(trials = nrow(trials_dt),
                              time = start1,
-                             inst = instructions1_rows,
                              create = as.numeric(difftime(start2, start1, units = "mins")),
                              run = as.numeric(difftime(start3, start2, units = "mins")),
                              merge_save = as.numeric(difftime(start4, start3, units = "mins")),
                              yearly_summary = as.numeric(difftime(start5, start4, units = "mins")),
-                             cell = as.numeric(difftime(start5, start1, units = "mins")))
+                             all = as.numeric(difftime(start5, start1, units = "mins")))
 print(time_track_tmp)
 
-folder_name <- paste0('./trial_characterization_box/Data/time_track_', batch_n)
-if(!file.exists(folder_name)){dir.create(folder_name, recursive = TRUE)}
-saveRDS(time_track_tmp, paste0(folder_name,'/time_track_',id10_n,'.rds'))
+saveRDS(time_track_tmp, './trial_characterization_box/Data/rds_files/time_track.rds')
   
   
   
-}#end trial_n loop
+
   
   
   

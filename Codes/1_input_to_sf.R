@@ -24,6 +24,9 @@ us_states4326.sf <- st_transform(us_states, 4326) %>% dplyr::select(state = NAME
 (plot1 <- tm_shape(us_states4326.sf) + tm_polygons()   +
   tm_shape(trials_sf) + tm_dots(size = 0.2))
 
+if(!file.exists('./trial_characterization_box/Data/output')){dir.create('./trial_characterization_box/Data/output', recursive = TRUE)}
+
+
 tmap_save(plot1, 
           filename = "./trial_characterization_box/Data/output/map.pdf", height = 8, width = 6)  
 
@@ -48,6 +51,9 @@ trials_sf <- trials_sf %>% dplyr::mutate(planting_date = as.Date(Planting, forma
                                          day = format(planting_date,"%d"),
                                          month = tolower(format(planting_date,"%b")),
                                          year = format(planting_date,"%Y")) 
+
+if(!file.exists('./trial_characterization_box/Data/rds_files')){dir.create('./trial_characterization_box/Data/rds_files', recursive = TRUE)}
+
 
 
 saveRDS(trials_sf, './trial_characterization_box/Data/rds_files/trials_sf.rds')
