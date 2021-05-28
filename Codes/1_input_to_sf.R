@@ -3,7 +3,7 @@ rm(list=ls())
 # Set the codes_folder to the folder with the codes
 
 
-setwd('C:/Users/germa/Box Sync/My_Documents') #dell
+setwd('C:/Users/germa/Box Sync/My_Documents') #Dell
 codes_folder <-'C:/Users/germa/Documents'#Dell
 # setwd('C:/Users/germanm2/Box Sync/My_Documents')#CPSC
 # codes_folder <-'C:/Users/germanm2/Documents'#CPSC
