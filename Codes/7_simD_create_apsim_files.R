@@ -57,7 +57,9 @@ apsim_create_files <- function(i){
   xml_text(x) <- as.character(tolower(trials_tmp$Crop))
   
   
-  cultivar <- ifelse(trials_tmp$Crop == 'soybean', 'MG_3', 'B_110')
+  cultivar <- ifelse(trials_tmp$Crop == 'soybean', 
+                     paste0('MG_', trials_tmp$Genetics), 
+                     paste0('B_', trials_tmp$Genetics))
   x <- xml_find_all(base_doc, ".//manager/ui/cultivar")
   xml_text(x) <- as.character(cultivar)
   

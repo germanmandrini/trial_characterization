@@ -173,3 +173,8 @@ caracterization_dt <- make_yearly_summary(daily_dt)
 
 saveRDS(caracterization_dt, './trial_characterization_box/Data/rds_files/caracterization_dt.rds')
 data.table::fwrite(caracterization_dt, './trial_characterization_box/Data/output/caracterization.csv')
+
+
+ggplot(caracterization_dt)+
+  geom_point(aes(x = swdef_expan_3, y = Yield)) +
+  facet_free(.~Crop)
