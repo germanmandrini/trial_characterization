@@ -2,7 +2,8 @@
 
 # Objective
 
-Repository for characterizing crop trials. It takes a csv with lat and long and plantings dates of several trials. Downloads weather and soil data and runs APSIM. Returns meaningful variables aggregated by crop stages
+This repository takes a csv with information from trials (crop, planting date, latitude, longitude). The csv should always have the same columns as the sample. It downloads soil and weather information, and it runs APSIM for each trial. In the output will add columns to the original csv with soil, weather, and APSIM information.
+
 # Use
 
 The characterization variables can be used to characterize the environment of the trials, find clusters of trials with similar conditions, use the variables as regressors to explain the trial results, extrapolate results to areas where trials were not implemented.
@@ -10,6 +11,19 @@ The characterization variables can be used to characterize the environment of th
 # About the code
 
 The codes are enumerated in the order they need to be executed. Only the first four codes need to be run, and these four codes will call the other ones.
+
+# Input variables
+
+The file input.csv has a row for each trial to be simulated. It requires the following information:
+
+| **Variable** | **Description** |
+| --- | --- |
+| Site | User site identifier |
+| Planting | Planting date |
+| Latitude | Latitude of the trial point |
+| Longitude | Longitude of the trial point |
+| Crop | soybean or maize |
+| Genetics | For soybean: maturity group (0 to 6, by 1)For corn: RM (80 to 130, by 5) |
 
 # Output variables
 
