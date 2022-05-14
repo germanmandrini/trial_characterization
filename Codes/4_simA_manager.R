@@ -6,6 +6,7 @@ library(data.table)
 #Get the computer where this is running
 server <- ifelse(Sys.info()["nodename"] == "campodonico", TRUE, FALSE)
 cpsc <-ifelse(Sys.info()["nodename"] == "CPSC-P10E53323", TRUE, FALSE)
+dell <-ifelse(Sys.info()["nodename"] == "DESKTOP-LE52KP8", TRUE, FALSE)
 cluster <- str_detect(string = Sys.info()["nodename"], pattern = 'campuscluster')
 print(Sys.info()["nodename"])
 
@@ -16,13 +17,15 @@ if(server){
 }else if(cpsc){
   setwd('C:/Users/germanm2/Box Sync/My_Documents')
   codes_folder <-'C:/Users/germanm2/Documents'
+}else if(dell){
+  setwd('C:/Users/germa/Box Sync/My_Documents') #dell
+  codes_folder <-'C:/Users/germa/Documents'#Dell
 }
 
 # ---------------------------------------------------------------------------------------------
 # Load needed files
 trials_dt <- readRDS("./trial_characterization_box/Data/rds_files/trials_sf.rds") %>% 
   data.table() %>% .[,-'geometry']
-
 
 # CREATE ALL FILES
 start1 <- Sys.time()

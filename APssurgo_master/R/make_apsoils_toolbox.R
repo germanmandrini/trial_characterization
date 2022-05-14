@@ -5,7 +5,7 @@ library(maps)
 library(maptools)
 
 if(FALSE){
-  data_soils = horizons_dt2
+  data_soils = horizons_dt
   badge_name = 'trials_characterization'
   path = directory
   crops = tolower(c("Maize","Soybean"))

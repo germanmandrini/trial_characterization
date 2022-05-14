@@ -15,6 +15,7 @@ library(maps)
 library(maptools)
 
 # Load the locs
+trials_sf <- readRDS('./trial_characterization_box/Data/rds_files/trials_sf.rds')
 locs_sf <- readRDS('./trial_characterization_box/Data/rds_files/locs_sf.rds')
 
 #---------------------------------------------------------------

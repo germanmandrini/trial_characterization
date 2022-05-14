@@ -58,7 +58,7 @@ if(server){
 # res <- suppressWarnings(system(paste(apsim_exe, file, sep = " "), show.output.on.console = FALSE))
 
 # -----------------------------------------------------------------------
-}else if(cpsc){
+}else if(cpsc | dell){
   # WINDOWS
   library(doParallel)
   library(stringr)
@@ -70,8 +70,11 @@ if(server){
   
   # system2( 'C:/Program Files (x86)/APSIM710-r4207/Model/Apsim.exe',  flist[1] )
   # result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4158/Model/Apsim.exe',  x ))  
-  result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4207/Model/Apsim.exe',  x )) 
-  
+  if(cpsc){
+    result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4207/Model/Apsim.exe',  x )) # CPSC
+  }else if(dell){
+    result <- parLapply(cl, flist, function(x) system2( 'C:/Program Files (x86)/APSIM710-r4171/Model/Apsim.exe',  x )) #Dell
+  }
 
   # stopCluster(cl) 
 

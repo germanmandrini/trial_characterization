@@ -38,6 +38,7 @@ data.table(c(NA,NA,NA,NA,NA,NA,NA,NA,NA,NA, 15,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA, 7,
 length(c(NA,NA,NA,NA,NA,NA,NA,NA,NA,NA, 15,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA, 7,NA,NA,NA,NA,NA))
 
 if(FALSE){
+  mukey_n = "1716815"
   restrict_depth = FALSE
   soilLayer_breaks = c(5,10,15,20,40,60,80,100,150,200,250)
 }
@@ -190,6 +191,7 @@ get_horizons <- function(mukey_n, soilLayer_breaks = c(5,10,15,20,40,60,80,100,1
   return(horizon_grouped)
 }
 
+soils_sf <- readRDS('./trial_characterization_box/Data/rds_files/soils_sf.rds')
 
 keep <- c('keep','Int', 'get_horizons')
 
