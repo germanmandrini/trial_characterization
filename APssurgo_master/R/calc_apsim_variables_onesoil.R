@@ -98,22 +98,22 @@ calc_apsim_variables <- function(horizons_dt, region_n){
     horizon[OC==0, OC := 0.001]
   
   
-    # horizon$FInert <- ifelse(horizon$center<=1,0.4,
-    #                          ifelse(horizon$center<=10,0.4,
-    #                                 ifelse(horizon$center<60,0.008*horizon$center+0.32,
-    #                                        ifelse(horizon$center<=120,0.8,
-    #                                               ifelse(horizon$center<180,0.0032*horizon$center+0.42,
-    #                                                      ifelse(horizon$center<=300,0.99,0)))))) #(0-1)
-    # 
-    # horizon$FBiom <- ifelse(horizon$center<=10,0.04,
-    #                         ifelse(horizon$center<=20,0.055-0.0015*horizon$center,
-    #                                ifelse(horizon$center<=30,0.03-0.0005*horizon$center,
-    #                                       ifelse(horizon$center<60,0.0216-0.0002*horizon$center,
-    #                                              ifelse(horizon$center<=300,0.01,0))))) #(0-1)
+    horizon$FInert <- ifelse(horizon$center<=1,0.4,
+                             ifelse(horizon$center<=10,0.4,
+                                    ifelse(horizon$center<60,0.008*horizon$center+0.32,
+                                           ifelse(horizon$center<=120,0.8,
+                                                  ifelse(horizon$center<180,0.0032*horizon$center+0.42,
+                                                         ifelse(horizon$center<=300,0.99,0)))))) #(0-1)
+
+    horizon$FBiom <- ifelse(horizon$center<=10,0.04,
+                            ifelse(horizon$center<=20,0.055-0.0015*horizon$center,
+                                   ifelse(horizon$center<=30,0.03-0.0005*horizon$center,
+                                          ifelse(horizon$center<60,0.0216-0.0002*horizon$center,
+                                                 ifelse(horizon$center<=300,0.01,0))))) #(0-1)
   
 
-    horizon$FBiom = c(0.08, 0.06, 0.055, 0.035, 0.015, 0.01,0.005, 0.005, 0.001,0.001)
-    horizon$FInert = c(0.42, 0.45, 0.55, 0.6, 0.65, 0.7, 0.75,0.80, 0.92, 0.98)
+    # horizon$FBiom = c(0.08, 0.06, 0.055, 0.035, 0.015, 0.01,0.005, 0.005, 0.001,0.001)
+    # horizon$FInert = c(0.42, 0.45, 0.55, 0.6, 0.65, 0.7, 0.75,0.80, 0.92, 0.98)
       
   
     

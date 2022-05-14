@@ -25,7 +25,10 @@ if(server){
   directory <- '/projects/aces/germanm2/trial_characterization'
   # directory <- paste('/home/germanm2/scratch/apsim_temp/trial', trial_n, sep = '')
   # directory <- paste('/projects/aces/germanm2/scratch/trial', trial_n, sep = '')
+}else{
+  directory <- paste('C:/apsim_temp/', Sys.info()["nodename"],'/trial_characterization', sep = '')
 }
+
 
 unlink(directory ,recursive=TRUE)
 

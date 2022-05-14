@@ -16,7 +16,7 @@ cl <- parallel::makeCluster(no_cores,type='SOCK')
 #i =   1
 
 apsim_create_files <- function(i){
-  # i = 1
+  # i = 57
   #--------------------------
   # preparation
   #--------------------------
@@ -115,7 +115,9 @@ apsim_create_files <- function(i){
   # soils_database <- xmlParse('./Trial_crct_DIFM/Data/APssurgo_master/APSIM_soils/Soils_DIFM_bysoil.soils')
   soils_database <- xml2::read_xml(paste(directory, 'trials_characterization.soils', sep = '/'))
   
-  soil_name2 <- paste('.//Soil[@name="', tolower(soils_dt$mukey), '"]', sep = '')
+  mukey_n = soils_dt[soils_dt$id_loc == trials_tmp$id_loc]$mukey 
+  
+  soil_name2 <- paste('.//Soil[@name="', tolower(mukey_n), '"]', sep = '')
   
   #--- replace soil ---#
   soil_temp2 <- xml_find_all(soils_database, soil_name2)
